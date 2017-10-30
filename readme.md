@@ -10,3 +10,6 @@ This application is designed to help in logging workouts.
 - Page showing all workouts.
 - Edit & update a workout.
 - Delete a workout.
+
+### Where I left off:
+- Simply setup a fresh Django project (latest version), and virtualenv (utilizing latest version of Python 3) that's it.
