@@ -1,0 +1,6 @@
+bcrypt==3.1.4
+cffi==1.11.2
+Django==1.11.6
+pycparser==2.18
+pytz==2017.2
+six==1.11.0
