@@ -32,39 +32,56 @@
           <div class="row">
             <!-- Logo & Information Panel-->
             <div class="col-lg-6">
-              <!-- <div class="info d-flex align-items-center"> -->
-                <!-- <div class="content"> -->
-                  <!-- <div class="logo"> -->
-                    <!-- <h1>FitnessTracker</h1> -->
-                  <!-- </div> -->
-                  <!-- <p>Track your workouts better.</p> -->
-                <!-- </div> -->
-              <!-- </div> -->
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>FitnessTracker</h1>
+                  </div>
+                  <p>Track your workouts better.</p>
+                </div>
+              </div>
             </div>
             <!-- Form Panel    -->
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <h1 class="color-white mb-4">FitnessTracker</h1>
-                  <form id="register-form" action="/dashboard" method="POST">
+                  <!-- <h1 class="color-white mb-4">FitnessTracker</h1> -->
+                  <form id="register-form" action="/register" method="POST">
                     {% csrf_token %}
+                    <!-- Registration Errors -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "registration error" %}
+                            <div class="alert alert-danger alert-dismissable" role="alert">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Error!</strong> {{ message }}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <!-- Username -->
                     <div class="form-group">
-                      <input id="register-username" type="text" name="registerUsername" required class="input-material">
-                      <label for="register-username" class="label-material">User Name</label>
+                      <input id="username" type="text" name="username" required class="input-material form-control-lg" placeholder="Username">
                     </div>
+                    <!-- Email Address -->
                     <div class="form-group">
-                      <input id="register-email" type="email" name="registerEmail" required class="input-material">
-                      <label for="register-email" class="label-material">Email Address      </label>
+                      <input id="email" type="email" name="email" required class="input-material form-control-lg" placeholder="Email Address">
                     </div>
+                    <!-- Password -->
                     <div class="form-group">
-                      <input id="register-passowrd" type="password" name="registerPassword" required class="input-material">
-                      <label for="register-passowrd" class="label-material">Password        </label>
+                      <input id="password" type="password" name="password" required class="input-material form-control-lg" placeholder="Password">
                     </div>
+                    <!-- Password Confirm -->
+                    <div class="form-group">
+                      <input id="password_confirmation" type="password" name="password_confirmation" required class="input-material form-control-lg" placeholder="Confirm Password">
+                    </div>
+                    <!-- TOS Policy -->
                     <div class="form-group terms-conditions">
-                      <input id="license" type="checkbox" class="checkbox-template">
+                      <input id="license" type="checkbox" class="checkbox-template" required name="tos_accept">
                       <label for="license" class="no-margin-bottom">Agree the terms and policy</label>
                     </div>
-                    <input id="register" type="submit" value="Register" class="btn btn-primary">
+                    <!-- Register Button -->
+                    <input id="register" type="submit" value="Register" class="btn btn-primary btn-lg">
                   </form><small>Already have an account? </small><a href="/" class="signup">Login</a>
                 </div>
               </div>

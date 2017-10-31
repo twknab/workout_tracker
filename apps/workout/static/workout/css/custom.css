@@ -1,11 +1,43 @@
-/* your styles go here */
+/***********************/
+/*    CUSTOM STYLES    */
+/***********************/
 
+ /* Give login and registration page translucent background */
 .login-page .form-holder .info {
 	background: rgba(33, 37, 41, 0.35) !important;
 	color: #ffffff;
 	text-shadow: 1px 1px 1px #000;
 }
 
+/* Give login and registration headers white color */
 .color-white {
   color: #ffffff;
+}
+
+/* Reduce height of login and registration panel */
+.login-page .form-holder .info, .login-page .form-holder .form {
+	min-height: 0vh;
+}
+
+/* Make input text color white with text shadow and increase padding */
+input.input-material {
+	padding: 10px;
+	color: #fff;
+	text-shadow:1px 1px 1px #000;
+}
+
+/* Increase font size of logina and registartion header */
+.login-page .form-holder .info h1 {
+	font-size: 3.5em;
+}
+
+/* Increase font size of login and registration header paragraph text */
+.login-page .form-holder .info p {
+	font-size: 1.3em;
+}
+
+/* Color match alert background to styling */
+.alert-danger {
+	background-color: #f8b4be;
+	border-color: #f8b4be;
 }

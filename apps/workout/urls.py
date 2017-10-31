@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.login),
     url(r'^register$', views.register),
+    url(r'^login$', views.login),
     url(r'^dashboard$', views.dashboard),
     url(r'^tables$', views.tables),
     url(r'^charts$', views.charts),

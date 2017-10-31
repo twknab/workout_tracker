@@ -32,31 +32,44 @@
           <div class="row">
             <!-- Logo & Information Panel-->
             <div class="col-lg-6">
-              <!-- <div class="info d-flex align-items-center"> -->
-                <!-- <div class="content"> -->
-                  <!-- <div class="logo"> -->
-                    <!-- <h1>FitnessTracker</h1> -->
-                  <!-- </div> -->
-                  <!-- <p>Track your workouts better.</p> -->
-                <!-- </div> -->
-              <!-- </div> -->
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>FitnessTracker</h1>
+                  </div>
+                  <p>Track your workouts better.</p>
+                </div>
+              </div>
             </div>
             <!-- Form Panel    -->
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <h1 class="color-white mb-4">FitnessTracker</h1>
-                  <form id="login-form" action="/dashboard" method="POST">
+                  <!-- Login Form -->
+                  <form id="login-form" action="/login" method="POST">
+                    <!-- Django CSRF Token -->
                     {% csrf_token %}
+                    <!-- Login Errors -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "login error" %}
+                            <div class="alert alert-danger alert-dismissable" role="alert">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Error!</strong> {{ message }}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <!-- Username -->
                     <div class="form-group">
-                      <input id="login-username" type="text" name="loginUsername" required="" class="input-material">
-                      <label for="login-username" class="label-material">User Name</label>
+                      <input id="username" type="text" name="username" required class="input-material form-control-lg" placeholder="Username">
                     </div>
+                    <!-- Password -->
                     <div class="form-group">
-                      <input id="login-password" type="password" name="loginPassword" required="" class="input-material">
-                      <label for="login-password" class="label-material">Password</label>
-                    </div><button id="login" type="submit" class="btn btn-primary">Login</button>
-                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                      <input id="password" type="password" name="password" required class="input-material form-control-lg" placeholder="Password">
+                    </div>
+                    <!-- Login Button -->
+                    <input id="login" type="submit" value="Login" class="btn btn-primary btn-lg">
                   </form><br><small>Don't have an account? </small><a href="/register" class="signup">Signup</a>
                 </div>
               </div>
