@@ -1,0 +1,11 @@
+/* your styles go here */
+
+.login-page .form-holder .info {
+	background: rgba(33, 37, 41, 0.35) !important;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px #000;
+}
+
+.color-white {
+  color: #ffffff;
+}
