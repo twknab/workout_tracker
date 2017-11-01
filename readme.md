@@ -19,7 +19,7 @@ This application is designed to help in logging workouts.
 - Get X latest workouts (can you paginate them all, or only most recent? What about large displays? Can you populate the width of the screen somehow?)
 
 ### Fix:
-- Avatar skew.
+- Minor alignment issues with Workout icon.
 - No floating footer when small mobile.
 
 ### Feature Upgrades to Build:

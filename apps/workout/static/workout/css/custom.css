@@ -47,17 +47,38 @@ input.input-material {
 	margin-top: 9px;
 }
 
-/* Add background color to avatar */
+/* Customize avatar to show polygon image */
 nav#sidebar .avatar {
-	background-color: #636c7a;
+	min-width: initial;
+	max-width: initial;
+	min-height: initial;
+	max-height: initial;
+	border-radius: 0%;
+	overflow: auto;
+	margin-right: 0px;
+	padding: 0px;
+	border: none;
 }
 
-/* Adjust avatar image */
+/* Adjust menu username */
+.title {
+	margin-left: 15px;
+}
+
+/* Adjust height and width of avatar image */
 .img-fluid.rounded-circle.avatar {
 	height: 50px;
+	width: 58px;
 	margin-right: 10px;
 	margin-bottom: 5px;
 	margin-top: auto;
+}
+
+/* Adjust workout icon spacing */
+.fa.fa-plus-square-o {
+	width: 38px;
+	/*position: relative;
+	left: 2px;*/
 }
 
 /* Customize dashboard link colors */

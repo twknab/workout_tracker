@@ -47,7 +47,7 @@ def register(request):
                 for error in validated["errors"]:
                     messages.error(request, error, extra_tags='registration')
                 # Reload register page:
-                return redirect("/register")
+                return redirect("/user/register")
         except KeyError:
             # If validation successful, set session and load dashboard based on user level:
             print("User passed validation and has been created.")
@@ -74,7 +74,28 @@ def dashboard(request):
 
     except (KeyError, User.DoesNotExist) as err:
         # If existing session not found:
-        messages.info(request, "You must be logged in to view!", extra_tags="invalid_session")
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
+        return redirect("/")
+
+def workout(request):
+    """If GET, load new workout; if POST, submit new workout."""
+
+    try:
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
+
+
+        # Gather any page data:
+        data = {
+            'user': user,
+        }
+
+        # Load dashboard with data:
+        return render(request, "workout/workout.html", data)
+
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
 
 

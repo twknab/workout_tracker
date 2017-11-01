@@ -51,7 +51,7 @@
                           {% if message.tags == "invalid_session info" %}
                           <div class="alert alert-info alert-dismissable" role="alert">
                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                              <strong>Important!</strong> {{ message }}
+                              <strong>Attention!</strong> {{ message }}
                           </div>
                           {% endif %}
                       {% endfor %}
@@ -68,7 +68,7 @@
                       {% endfor %}
                   {% endif %}
                   <!-- Login Form -->
-                  <form id="login-form" action="/login" method="POST">
+                  <form id="login-form" action="/user/login" method="POST">
                     <!-- Django CSRF Token -->
                     {% csrf_token %}
                     <!-- Login Error Messages -->
@@ -92,7 +92,7 @@
                     </div>
                     <!-- Login Button -->
                     <input id="login" type="submit" value="Login" class="btn btn-primary btn-lg">
-                  </form><br><small>Don't have an account? </small><a href="/register" class="signup">Signup</a>
+                  </form><br><small>Don't have an account? </small><a href="/user/register" class="signup">Signup</a>
                 </div>
               </div>
             </div>
