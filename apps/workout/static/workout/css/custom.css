@@ -41,3 +41,26 @@ input.input-material {
 	background-color: #f8b4be;
 	border-color: #f8b4be;
 }
+
+/* Adjust avatar image */
+.img-fluid.rounded-circle {
+	margin-top: 9px;
+}
+
+/* Add background color to avatar */
+nav#sidebar .avatar {
+	background-color: #636c7a;
+}
+
+/* Adjust avatar image */
+.img-fluid.rounded-circle.avatar {
+	height: 50px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	margin-top: auto;
+}
+
+/* Customize dashboard link colors */
+.card-link:hover {
+	color: #BFC1BB;
+}

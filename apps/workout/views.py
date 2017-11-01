@@ -59,7 +59,24 @@ def register(request):
 def dashboard(request):
     """Loads dashboard."""
 
-    return render(request, "workout/dashboard.html")
+    try:
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
+
+
+        # Gather any page data:
+        data = {
+            'user': user,
+        }
+
+        # Load dashboard with data:
+        return render(request, "workout/dashboard.html", data)
+
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view!", extra_tags="invalid_session")
+        return redirect("/")
+
 
 def tables(request):
     """Loads tables."""
@@ -75,3 +92,18 @@ def forms(request):
     """Loads forms."""
 
     return render(request, "workout/forms.html")
+
+def logout(request):
+    """Logs out current user."""
+
+    try:
+        # Deletes session:
+        del request.session['user_id']
+        # Adds success message:
+        messages.success(request, "You have been logged out.", extra_tags='logout')
+
+    except KeyError:
+        pass
+
+    # Return to index page:
+    return redirect("/")

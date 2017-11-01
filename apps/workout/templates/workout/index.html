@@ -45,11 +45,33 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
+                  <!-- Info Messages -->
+                  {% if messages %}
+                      {% for message in messages %}
+                          {% if message.tags == "invalid_session info" %}
+                          <div class="alert alert-info alert-dismissable" role="alert">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <strong>Important!</strong> {{ message }}
+                          </div>
+                          {% endif %}
+                      {% endfor %}
+                  {% endif %}
+                  <!-- Logout Message -->
+                  {% if messages %}
+                      {% for message in messages %}
+                          {% if message.tags == "logout success" %}
+                          <div class="alert alert-success alert-dismissable" role="alert">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <strong>Success!</strong> {{ message }}
+                          </div>
+                          {% endif %}
+                      {% endfor %}
+                  {% endif %}
                   <!-- Login Form -->
                   <form id="login-form" action="/login" method="POST">
                     <!-- Django CSRF Token -->
                     {% csrf_token %}
-                    <!-- Login Errors -->
+                    <!-- Login Error Messages -->
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.tags == "login error" %}
@@ -83,7 +105,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"> </script>
     <script src="{% static 'workout/javascript/bootstrap.min.js' %}"></script>
     <script src="{% static 'workout/javascript/jquery.cookie.js' %}"> </script>
-    <script src="{% static 'workout/javascript/Chart.min.js' %}"></script>
+    <!-- <script src="{% static 'workout/javascript/Chart.min.js' %}"></script> -->
     <script src="{% static 'workout/javascript/front.js' %}"></script>
   </body>
 </html>
