@@ -83,42 +83,46 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12 text-light">
+                          {% if workout.completed == False %}
                             <!-- End Workout Button -->
                             <button id="end-workout" type="button" class="btn btn-primary btn-lg float-right end-workout mb-4">End Workout</button>
+                          {% endif %}
                             <!-- Workout Name -->
                             <h2 class="">{{workout.name}}</h2>
                             <!-- Workout Subtitle -->
                             <small class="text-muted">{{workout.created_at | date}}</small>
-                            <div class="card bg-dark add-exercise mb-5 mt-5" style="">
+                            {% if workout.completed == False %}
+                              <div class="card bg-dark add-exercise mb-5 mt-5" style="">
                                 <div class="card-body">
-                                    <form id="exercise-form" class="" action="/workout/ + {{workout.id}}" method="POST">
-                                        {% csrf_token %}
-                                        <!-- Exercise Errors -->
-                                        {% if messages %} {% for message in messages %} {% if message.tags == "exercise error" %}
-                                        <div class="alert alert-danger alert-dismissable" role="alert">
-                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                            <strong>Error!</strong> {{ message }}
-                                        </div>
-                                        {% endif %} {% endfor %} {% endif %}
-                                        <!-- Exercise Name -->
-                                        <div class="form-row">
-                                          <div class="form-group col-md-4">
-                                            <input id="name" type="text" name="name" required class="input-material form-control-lg mr-4" placeholder="Name">
-                                          </div>
-                                          <!-- Exercise Weight -->
-                                          <div class="form-group col-md-4">
-                                            <input id="weight" type="text" name="weight" class="input-material form-control-lg mr-4" placeholder="Weight (lbs)">
-                                          </div>
-                                          <!-- Exercise Repititions -->
-                                          <div class="form-group col-md-4">
-                                            <input id="reps" type="text" name="reps" class="input-material form-control-lg mr-4" placeholder="Repetitions">
-                                          </div>
-                                        </div>
-                                        <!-- Add Workout Button -->
-                                        <input id="add" type="submit" value="Add Exercise" class="btn btn-secondary btn-lg mt-3 btn-block">
-                                    </form>
+                                  <form id="exercise-form" class="" action="/workout/ + {{workout.id}}" method="POST">
+                                    {% csrf_token %}
+                                    <!-- Exercise Errors -->
+                                    {% if messages %} {% for message in messages %} {% if message.tags == "exercise error" %}
+                                    <div class="alert alert-danger alert-dismissable" role="alert">
+                                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                      <strong>Error!</strong> {{ message }}
+                                    </div>
+                                    {% endif %} {% endfor %} {% endif %}
+                                    <!-- Exercise Name -->
+                                    <div class="form-row">
+                                      <div class="form-group col-md-4">
+                                        <input id="name" type="text" name="name" required class="input-material form-control-lg mr-4" placeholder="Name">
+                                      </div>
+                                      <!-- Exercise Weight -->
+                                      <div class="form-group col-md-4">
+                                        <input id="weight" type="text" name="weight" class="input-material form-control-lg mr-4" placeholder="Weight (lbs)">
+                                      </div>
+                                      <!-- Exercise Repititions -->
+                                      <div class="form-group col-md-4">
+                                        <input id="reps" type="text" name="reps" class="input-material form-control-lg mr-4" placeholder="Repetitions">
+                                      </div>
+                                    </div>
+                                    <!-- Add Workout Button -->
+                                    <input id="add" type="submit" value="Add Exercise" class="btn btn-secondary btn-lg mt-3 btn-block">
+                                  </form>
                                 </div>
-                            </div>
+                              </div>
+                            {% endif %}
                             <!-- Workout Description -->
                             {% if workout.description %}
                             <p class="mt-5">{{workout.description}}</p>
@@ -193,11 +197,6 @@
                                       </tr>
                                       <tr>
                                           <th scope="row">Leg Press</th>
-                                          <td>25 lbs</td>
-                                          <td>11 reps</td>
-                                      </tr>
-                                      <tr>
-                                          <th scope="row">Ultimate Squat Deep Very Deep That's What She Said</th>
                                           <td>25 lbs</td>
                                           <td>11 reps</td>
                                       </tr>
