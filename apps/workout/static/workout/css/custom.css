@@ -1,6 +1,14 @@
-/***********************/
-/*    CUSTOM STYLES    */
-/***********************/
+/****************/
+/*    GENERAL   */
+/****************/
+.btn-secondary {
+	background-color: #474b4e;
+	border-color: #45494d;
+}
+
+/*************************/
+/*    LOGIN / REGISTER   */
+/*************************/
 
  /* Give login and registration page translucent background */
 .login-page .form-holder .info {
@@ -27,8 +35,14 @@ input.input-material {
 }
 
 /* Increase font size of logina and registartion header */
-.login-page .form-holder .info h1 {
+/*.login-page .form-holder .info h1 {
 	font-size: 3.5em;
+}*/
+
+.display-3 {
+	font-size: 4.5rem !important;
+	font-weight: 300 !important;
+	line-height: 1.1 !important;
 }
 
 /* Increase font size of login and registration header paragraph text */
@@ -41,6 +55,20 @@ input.input-material {
 	background-color: #f8b4be;
 	border-color: #f8b4be;
 }
+
+/* Reduce login and registration text on mobile */
+@media only screen and (max-width: 600px)  {
+  .display-3 {
+    font-size: 2rem !important;
+  }
+	.display-3-intro-subtext {
+		font-size: 1rem !important;
+	}
+}
+
+/*****************************/
+/*         DASHBOARD         */
+/*****************************/
 
 /* Adjust avatar image */
 .img-fluid.rounded-circle {
@@ -75,13 +103,26 @@ nav#sidebar .avatar {
 }
 
 /* Adjust workout icon spacing */
-.fa.fa-plus-square-o {
-	width: 38px;
+nav#sidebar ul a i .fa.fa-plus-square {
+	padding-right: 3px;
 	/*position: relative;
 	left: 2px;*/
+}
+
+i.fa.fa-plus-square {
+	padding-right: 23px !important;
 }
 
 /* Customize dashboard link colors */
 .card-link:hover {
 	color: #BFC1BB;
+}
+
+/***************************/
+/*         WORKOUT         */
+/***************************/
+
+/* Darken background for add exercise form only */
+.bg-dark.add-exercise {
+	background-color: #2D3035 !important;
 }

@@ -7,12 +7,10 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.login), # index / login page
-    url(r'^user/register$', views.register), # register page / registers user
+    url(r'^user/register$', views.register), # get register page / register user
     url(r'^user/login$', views.login), # logs in existing user
     url(r'^user/logout$', views.logout), # destroys user session
-    url(r'^dashboard$', views.dashboard), # loads dashboard
-    url(r'^workout$', views.workout), # workout page / submit workout
-    url(r'^tables$', views.tables),
-    url(r'^charts$', views.charts),
-    url(r'^forms$', views.forms),
+    url(r'^dashboard$', views.dashboard), # get dashboard
+    url(r'^workout$', views.new_workout), # get workout page / add workout
+    url(r'^workout/(?P<id>\d*)$', views.workout), # get workout / update workout
 ]

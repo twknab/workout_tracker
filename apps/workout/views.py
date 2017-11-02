@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # access django's `messages` module.
-from .models import User
+from .models import User, Workout
 
 def login(request):
     """If GET, load login page, if POST, login user."""
@@ -38,7 +38,7 @@ def register(request):
 
     if request.method == "POST":
         # Validate registration data:
-        validated = User.objects.register(**request.POST) # see `./models.py`, `UserManager.register()`
+        validated = User.objects.register(**request.POST)
         # If errors, reload register page with errors:
         try:
             if len(validated["errors"]) > 0:
@@ -77,7 +77,7 @@ def dashboard(request):
         messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
 
-def workout(request):
+def new_workout(request):
     """If GET, load new workout; if POST, submit new workout."""
 
     try:
@@ -90,29 +90,56 @@ def workout(request):
             'user': user,
         }
 
-        # Load dashboard with data:
-        return render(request, "workout/workout.html", data)
+        if request.method == "GET":
+            # If get request, load `add workout` page with data:
+            return render(request, "workout/add_workout.html", data)
+
+        if request.method == "POST":
+            # Begin validation of a new workout:
+            validated = Workout.objects.new(**request.POST)
+            # If errors, reload register page with errors:
+            try:
+                if len(validated["errors"]) > 0:
+                    print("Workout could not be created.")
+                    # Loop through errors and Generate Django Message for each with custom level and tag:
+                    for error in validated["errors"]:
+                        messages.error(request, error, extra_tags='workout')
+                    # Reload workout page:
+                    return redirect("/workout")
+            except KeyError:
+                # If validation successful, load newly created hike page:
+                print("Workout passed validation and has been created.")
+
+                id = str(validated['new_workout'].id)
+                # Load workout:
+                return redirect('/workout/' + id)
 
     except (KeyError, User.DoesNotExist) as err:
         # If existing session not found:
         messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
 
+def workout(request, id):
+    """If GET, load workout; if POST, update workout."""
 
-def tables(request):
-    """Loads tables."""
+    try:
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
 
-    return render(request, "workout/tables.html")
+        # Gather any page data:
+        data = {
+            'user': user,
+            'workout': Workout.objects.get(id=id),
+        }
 
-def charts(request):
-    """Loads charts."""
+        if request.method == "GET":
+            # If get request, load workout page with data:
+            return render(request, "workout/workout.html", data)
 
-    return render(request, "workout/charts.html")
-
-def forms(request):
-    """Loads forms."""
-
-    return render(request, "workout/forms.html")
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
+        return redirect("/")
 
 def logout(request):
     """Logs out current user."""

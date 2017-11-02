@@ -60,60 +60,49 @@
     <div class="d-flex align-items-stretch ">
         <nav id="sidebar">
             <div class="sidebar-header d-flex align-items-center ">
-              <img src="{% static "workout/images/badges/" %}badge_{{user.level}}.png" alt="..." class="img-fluid rounded-circle avatar">
+                <img src="{% static 'workout/images/badges/badge_1.png' %}" alt="..." class="img-fluid rounded-circle avatar">
                 <!-- <div class="avatar"><img src="{% static 'workout/images/dumbbell.png' %}" alt="..." class="img-fluid rounded-circle"></div> -->
                 <div class="title">
                     <h1 class="h5">{{user.username}}</h1>
-                    <p>{{user.level_name}}</p>
+                    <p>Newbie</p>
                 </div>
             </div><span class="heading">Menu</span>
             <ul class="list-unstyled">
-                <li class="active"><a href="#"><i class="icon-home"></i>Home</a></li>
-                <li><a href="/workout"><i class="fa fa-plus-square"></i>Workout</a></li>
-                <li><a href="#"><i class="fa fa-th-list"></i>View All </a></li>
+                <li><a href="/dashboard"><i class="icon-home"></i> Home</a></li>
+                <li class="active"><a href="/workout"><i class="fa fa-plus-square"></i> Workout</a></li>
+                <li> <a href="#"><i class="fa fa-th-list"></i> View All </a></li>
             </ul>
         </nav>
-        <div class="page-content mb-5">
+        <div class="page-content ">
             <div class="page-header">
                 <div class="container-fluid">
-                    <h2 class="h5 no-margin-bottom">Dashboard</h2>
+                    <h2 class="h5 no-margin-bottom">Add Workout</h2>
                 </div>
             </div>
             <section class="no-padding-bottom">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <!-- Perform django if check here for workouts-->
-                            <div class="card-deck">
-                              <!-- If so, repeat cards here: -->
-                              <div class="card text-white bg-dark mb-4" style="width: 20rem;">
-                                  <div class="card-body">
-                                      <h4 class="card-title">Chest, Abs</h4>
-                                      <h6 class="card-subtitle mb-2 text-muted">Week 1, Day 2</h6>
-                                      <p class="card-text">Chest and abs strength training workout.
-                                      </p>
-                                      <a href="#" class="card-link">View</a>
-                                      <a href="#" class="card-link">View All</a>
-                                      <p class="card-text">
-                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                      </p>
-
-                                  </div>
-                              </div>
-                              <div class="card text-white bg-dark mb-4" style="width: 20rem;">
-                                  <div class="card-body">
-                                      <h4 class="card-title">Legs, Glutes</h4>
-                                      <h6 class="card-subtitle mb-2 text-muted">Week 1, Day 1</h6>
-                                      <p class="card-text">Leg and glutes strength training workout.
-                                      </p>
-                                      <a href="#" class="card-link">View</a>
-                                      <a href="#" class="card-link">View All</a>
-                                      <p class="card-text">
-                                        <small class="text-muted">Last updated 1 day ago</small>
-                                      </p>
-                                  </div>
-                              </div>
-                            </div>
+                            <form id="workout-form" action="/workout" method="POST">
+                                {% csrf_token %}
+                                <!-- Workout Errors -->
+                                {% if messages %} {% for message in messages %} {% if message.tags == "workout error" %}
+                                <div class="alert alert-danger alert-dismissable" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Error!</strong> {{ message }}
+                                </div>
+                                {% endif %} {% endfor %} {% endif %}
+                                <!-- Workout Name -->
+                                <div class="form-group">
+                                    <input id="name" type="text" name="name" required class="input-material form-control-lg" placeholder="Name">
+                                </div>
+                                <!-- Workout Description -->
+                                <div class="form-group">
+                                    <input id="description" type="text" name="description" class="input-material form-control-lg" placeholder="Description">
+                                </div>
+                                <!-- Add Workout Button -->
+                                <input id="add" type="submit" value="Add" class="btn btn-primary btn-lg">
+                            </form>
                         </div>
                     </div>
                 </div>

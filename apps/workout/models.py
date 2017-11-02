@@ -181,6 +181,153 @@ class UserManager(models.Manager):
             }
             return errors
 
+class WorkoutManager(models.Manager):
+    """Additional instance method functions for `Workout`"""
+
+    def new(self, **kwargs):
+        """
+        Validates and registers a new workout.
+
+        Parameters:
+        - `self` - Instance to whom this method belongs.
+        - `**kwargs` - Dictionary object of workout values from controller to be validated.
+
+        Validations:
+        - Name - Required; No fewer than 2 characters; letters, basic characters, numbers only
+        - Description - Required; letters, basic characters, numbers only
+        """
+
+        # Create empty errors list, which we'll return to generate django messages back in our controller:
+        errors = []
+
+        #-----------#
+        #-- NAME: --#
+        #-----------#
+        # Check if name is less than 2 characters:
+        if len(kwargs["name"][0]) < 2:
+            errors.append('Name is required and must be at least 2 characters long.')
+
+        # Check if name contains letters, numbers and basic characters only:
+        '''
+        Note: The following regex pattern matches for strings which start or do not start with spaces, whom contain letters, numbers and some basic character sequences, followed by either more spaces or more characters. This prevents empty string submissions.
+        '''
+        WORKOUT_REGEX = re.compile(r'^\s*[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+(?:\s+[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+)*\s*$')
+
+        # Test name against regex object:
+        print("THIS IS THE WORKOUT REGEX TEST:")
+        print(kwargs["name"][0])
+        print(WORKOUT_REGEX.match(kwargs["name"][0]))
+        print("$$$$$$$$$$$$$")
+        if not WORKOUT_REGEX.match(kwargs["name"][0]):
+            errors.append('Name must contain letters, numbers and basic characters only.')
+
+        #------------------#
+        #-- DESCRIPTION: --#
+        #------------------#
+        # Check if description is less than 2 characters:
+        if len(kwargs["description"][0]) < 2:
+            errors.append('Description is required and must be at least 2 characters long.')
+
+        # Check if description contains letters, numbers and basic characters only:
+        # Test description against regex object (we'll just use WORKOUT_REGEX again since the pattern has not changed):
+        if not WORKOUT_REGEX.match(kwargs["description"][0]):
+            errors.append('Description must contain letters, numbers and basic characters only.')
+
+        # Check for validation errors:
+        # If none, create workout and load workout page:
+        if len(errors) == 0:
+            # Create new validated workout:
+            validated_workout = {
+                "new_workout": Workout(name=kwargs["name"][0], description=kwargs["description"][0]),
+            }
+            # Save new Workout:
+            validated_workout["new_workout"].save()
+            # Return created Workout:
+            return validated_workout
+        else:
+            # Else, if validation fails, print errors to console and return errors object:
+            for error in errors:
+                print("Validation Error: ", error)
+            # Prepare data for controller:
+            errors = {
+                "errors": errors,
+            }
+            return errors
+
+    def login(self, **kwargs):
+        """
+        Validates and logs in a new user.
+
+        Parameters:
+        - `self` - Instance to whom this method belongs.
+        - `**kwargs` - Dictionary object of login values from controller.
+
+        Validations:
+        - All fields required.
+        - Existing User is found.
+        - Password matches User's stored password.
+        """
+
+        # Create empty errors list:
+        errors = []
+
+        #------------------#
+        #--- ALL FIELDS ---#
+        #------------------#
+        # Check that all fields are required:
+        if len(kwargs["username"][0]) < 1 or len(kwargs["password"][0]) < 1:
+            errors.append('All fields are required.')
+        else:
+            #------------------#
+            #---- EXISTING ----#
+            #------------------#
+            # Look for existing User to login by username:
+            try:
+                logged_in_user = User.objects.get(username=kwargs["username"][0])
+
+                #------------------#
+                #---- PASSWORD ----#
+                #------------------#
+                # Compare passwords with bcrypt:
+                # Note: We must encode both prior to testing
+                try:
+
+                    password = kwargs["password"][0].encode()
+                    hashed = logged_in_user.password.encode()
+
+                    if not (bcrypt.checkpw(password, hashed)):
+                        print("ERROR: PASSWORD IS INCORRECT")
+                        # Note: We send back a general error that does not specify what credential is invalid: this is for security purposes and is admittedly a slight inconvenience to our user, but makes it harder to gather information from the server during brute for attempts
+                        errors.append("Username or password is incorrect.")
+
+                except ValueError:
+                    # If user's stored password is unable to be used by bcrypt (likely b/c password is not hashed):
+                    errors.append('This user is corrupt. Please contact the administrator.')
+
+            # If existing User is not found:
+            except User.DoesNotExist:
+                print("ERROR: USERNAME IS INVALID")
+                # Note: See password validation note above:
+                errors.append('Username or password is incorrect.')
+
+        # If no validation errors, return logged in user:
+        if len(errors) == 0:
+            # Prepare data for controller:
+            validated_user = {
+                "logged_in_user": logged_in_user,
+            }
+            # Send back validated logged in User:
+            return validated_user
+        # Else, if validation fails print errors and return errors to controller:
+        else:
+            for error in errors:
+                print("Validation Error: ", error)
+            # Prepare data for controller:
+            errors = {
+                "errors": errors,
+            }
+            return errors
+
 
     # def update_profile(self, **kwargs):
     #     """
@@ -412,6 +559,17 @@ class User(models.Model):
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=22)
     tos_accept = models.BooleanField(default=False)
+    level = models.IntegerField(default=1)
+    level_name = models.CharField(max_length=15, default="Newbie")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager() # Adds additional instance methods to `User`
+
+class Workout(models.Model):
+    """Creates instances of `Workout`."""
+
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=150)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = WorkoutManager()

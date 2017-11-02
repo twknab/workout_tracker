@@ -69,43 +69,144 @@
             </div><span class="heading">Menu</span>
             <ul class="list-unstyled">
                 <li><a href="/dashboard"><i class="icon-home"></i> Home</a></li>
-                <li class="active"><a href="/workout"><i class="fa fa-plus-square-o"></i> Workout</a></li>
+                <li class="active"><a href="/workout"><i class="fa fa-plus-square"></i> Workout</a></li>
                 <li> <a href="#"><i class="fa fa-th-list"></i> View All </a></li>
             </ul>
         </nav>
-        <div class="page-content ">
+        <div class="page-content mb-5">
             <div class="page-header">
                 <div class="container-fluid">
-                    <h2 class="h5 no-margin-bottom">Add Workout</h2>
+                    <h2 class="h5 no-margin-bottom">Workout</h2>
                 </div>
             </div>
             <section class="no-padding-bottom">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <form id="register-form" action="/user/register" method="POST">
-                                {% csrf_token %}
-                                <!-- Workout Errors -->
-                                {% if messages %} {% for message in messages %} {% if message.tags == "workout error" %}
-                                <div class="alert alert-danger alert-dismissable" role="alert">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>Error!</strong> {{ message }}
+                        <div class="col-lg-12 text-light">
+                            <!-- End Workout Button -->
+                            <button id="end-workout" type="button" class="btn btn-primary btn-lg float-right end-workout mb-4">End Workout</button>
+                            <!-- Workout Name -->
+                            <h2 class="">{{workout.name}}</h2>
+                            <!-- Workout Subtitle -->
+                            <small class="text-muted">{{workout.created_at | date}}</small>
+                            <div class="card bg-dark add-exercise mb-5 mt-5" style="">
+                                <div class="card-body">
+                                    <form id="exercise-form" class="" action="/workout/ + {{workout.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <!-- Exercise Errors -->
+                                        {% if messages %} {% for message in messages %} {% if message.tags == "exercise error" %}
+                                        <div class="alert alert-danger alert-dismissable" role="alert">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>Error!</strong> {{ message }}
+                                        </div>
+                                        {% endif %} {% endfor %} {% endif %}
+                                        <!-- Exercise Name -->
+                                        <div class="form-row">
+                                          <div class="form-group col-md-4">
+                                            <input id="name" type="text" name="name" required class="input-material form-control-lg mr-4" placeholder="Name">
+                                          </div>
+                                          <!-- Exercise Weight -->
+                                          <div class="form-group col-md-4">
+                                            <input id="weight" type="text" name="weight" class="input-material form-control-lg mr-4" placeholder="Weight (lbs)">
+                                          </div>
+                                          <!-- Exercise Repititions -->
+                                          <div class="form-group col-md-4">
+                                            <input id="reps" type="text" name="reps" class="input-material form-control-lg mr-4" placeholder="Repetitions">
+                                          </div>
+                                        </div>
+                                        <!-- Add Workout Button -->
+                                        <input id="add" type="submit" value="Add Exercise" class="btn btn-secondary btn-lg mt-3 btn-block">
+                                    </form>
                                 </div>
-                                {% endif %} {% endfor %} {% endif %}
-                                <!-- Workout Name -->
-                                <div class="form-group">
-                                    <input id="name" type="text" name="name" required class="input-material form-control-lg" placeholder="Name">
-                                </div>
-                                <!-- Workout Description -->
-                                <div class="form-group">
-                                    <input id="description" type="text" name="description" required class="input-material form-control-lg" placeholder="Description">
-                                </div>
-                                <!-- Add Workout Button -->
-                                <input id="add" type="submit" value="Add" class="btn btn-primary btn-lg">
-                            </form>
+                            </div>
+                            <!-- Workout Description -->
+                            {% if workout.description %}
+                            <p class="mt-5">{{workout.description}}</p>
+                            {% endif %}
+                            <hr>
+                            <!-- Exercises Table -->
+                            <div id="exercise-wrapper" class="mb-5">
+                              <!-- <h4 class="card-title">Exercise Data</h4> -->
+                              <table class="table table-striped table-sm">
+                                  <!-- <thead> -->
+                                      <!-- <tr> -->
+                                          <!-- <th>Name</th> -->
+                                          <!-- <th>Weight</th> -->
+                                          <!-- <th>Repetitions</th> -->
+                                      <!-- </tr> -->
+                                  <!-- </thead> -->
+                                  <tbody>
+                                      <tr>
+                                          <th scope="row">DB Curl</th>
+                                          <td>25 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">DB Curl</th>
+                                          <td>25 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">DB Curl</th>
+                                          <td>35 lbs</td>
+                                          <td>8 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Tricep Extension</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Tricep Extension</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Tricep Extension</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">DB Preacher Curl</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">DB Preacher Curl</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">DB Preacher Curl</th>
+                                          <td>20 lbs</td>
+                                          <td>15 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Leg Press</th>
+                                          <td>25 lbs</td>
+                                          <td>11 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Leg Press</th>
+                                          <td>25 lbs</td>
+                                          <td>11 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Leg Press</th>
+                                          <td>25 lbs</td>
+                                          <td>11 reps</td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Ultimate Squat Deep Very Deep That's What She Said</th>
+                                          <td>25 lbs</td>
+                                          <td>11 reps</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
                         </div>
                     </div>
                 </div>
+              </div>
             </section>
             <footer class="footer fixed-bottom no-margin-bottom">
                 <div class="footer__block block no-margin-bottom">
@@ -125,6 +226,7 @@
     </script>
     <!-- <script src="{% static 'workout/javascript/Chart.min.js' %}"></script> -->
     <script src="{% static 'workout/javascript/front.js' %}"></script>
+    <script src="{% static 'workout/javascript/exercise.js' %}"></script>
 </body>
 
 </html>
