@@ -214,10 +214,6 @@ class WorkoutManager(models.Manager):
         WORKOUT_REGEX = re.compile(r'^\s*[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+(?:\s+[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+)*\s*$')
 
         # Test name against regex object:
-        print("THIS IS THE WORKOUT REGEX TEST:")
-        print(kwargs["name"][0])
-        print(WORKOUT_REGEX.match(kwargs["name"][0]))
-        print("$$$$$$$$$$$$$")
         if not WORKOUT_REGEX.match(kwargs["name"][0]):
             errors.append('Name must contain letters, numbers and basic characters only.')
 
@@ -551,6 +547,8 @@ class WorkoutManager(models.Manager):
     #             "errors": errors,
     #         }
     #         return errors
+
+    test = "This is just a string."
 
 class User(models.Model):
     """Creates instances of `User`."""

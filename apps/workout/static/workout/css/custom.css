@@ -56,13 +56,20 @@ input.input-material {
 	border-color: #f8b4be;
 }
 
-/* Reduce login and registration text on mobile */
+/* Reduce login and registration display text on mobile */
 @media only screen and (max-width: 600px)  {
   .display-3 {
     font-size: 2rem !important;
   }
 	.display-3-intro-subtext {
 		font-size: 1rem !important;
+	}
+}
+
+/* Reduce login and registration display text at exact break point  */
+@media only screen and (max-width: 1200px) and (min-width: 993px)  {
+	.display-3 {
+		font-size: 3.5rem !important;
 	}
 }
 
@@ -118,11 +125,43 @@ i.fa.fa-plus-square {
 	color: #BFC1BB;
 }
 
+
+/* Remove border around pagination */
+.page-link {
+	border:none !important;
+}
+
+/* Adjust card columns depending upon viewport */
+/* xs */
+@media only screen and (max-width: 767px)  {
+  .card-columns {
+    column-count: 1;
+  }
+}
+/* sm */
+@media only screen and (max-width: 991px) and (min-width: 768px)  {
+	.card-columns {
+		column-count: 2;
+	}
+}
+/* md */
+@media only screen and (max-width: 1199px) and (min-width: 992px)  {
+	.card-columns {
+		column-count: 3;
+	}
+}
+/* lg */
+@media only screen and (min-width: 1200px)  {
+	.card-columns {
+		column-count: 4;
+	}
+}
+
 /***************************/
 /*         WORKOUT         */
 /***************************/
 
 /* Darken background for add exercise form only */
 .bg-dark.add-exercise {
-	background-color: #2D3035 !important;
+	background-color: #1d2023 !important;
 }

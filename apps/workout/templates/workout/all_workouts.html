@@ -68,26 +68,28 @@
                 </div>
             </div><span class="heading">Menu</span>
             <ul class="list-unstyled">
-                <li class="active"><a href="/dashboard"><i class="icon-home"></i>Home</a></li>
+                <li class=""><a href="/dashboard"><i class="icon-home"></i>Home</a></li>
                 <li><a href="/workout"><i class="fa fa-plus-square"></i>Workout</a></li>
-                <li><a href="/workouts"><i class="fa fa-th-list"></i>View All </a></li>
+                <li class="active"><a href="/workouts"><i class="fa fa-th-list"></i>View All </a></li>
             </ul>
         </nav>
         <div class="page-content mb-5">
             <div class="page-header">
                 <div class="container-fluid">
-                    <h2 class="h5 no-margin-bottom">Dashboard</h2>
+                    <h2 class="h5 no-margin-bottom">All Workouts</h2>
                 </div>
             </div>
             <section class="no-padding-bottom">
-                <div class="container-fluid mb-4">
+                <div class="container-fluid">
                     <div class="row">
-                      <!-- Perform django if check here for recent_workouts-->
-                      {% if recent_workouts %}
-                        <!-- If so, repeat cards here: -->
-                        {% for workout in recent_workouts %}
                         <div class="col-lg-12 pb-4">
-                              <div class="card text-white bg-dark mb-2">
+                            <!-- Perform django if check here for workouts-->
+                            {% if workouts %}
+                            <div class="card-columns">
+                              <!-- If so, repeat Workout Cards here: -->
+                              {% for workout in workouts %}
+                              <!-- Workout Card -->
+                              <div class="card text-white bg-dark mb-4">
                                   <div class="card-body">
                                       <h4 class="card-title">{{workout.name}}</h4>
                                       <h6 class="card-subtitle mb-2 text-muted">{{workout.created_at | date }}</h6>
@@ -99,22 +101,50 @@
                                       </p>
                                   </div>
                               </div>
+                              {% endfor %}
+                            </div>
+                            <!-- Workout Pagination -->
+                            {% if workouts.has_other_pages %}
+                            <ul class="pagination pagination-lg justify-content-end mb-4">
+                                {% if workouts.has_previous %}
+                                  <li class="page-item">
+                                    <a href="?page={{ workouts.previous_page_number }}" class="page-link bg-dark text-white">Previous</a>
+                                  </li>
+                                {% else %}
+                                  <li class="page-item disabled">
+                                    <span class="page-link end-nav bg-dark">Previous</span>
+                                  </li>
+                                {% endif %} {% for i in workouts.paginator.page_range %} {% if workouts.number == i %}
+                                  <li class="page-item active">
+                                    <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                  <a href="?page={{ i }}" class="page-link bg-dark text-white">{{ i }}</a>
+                                </li>
+                                {% endif %} {% endfor %} {% if workouts.has_next %}
+                                <li class="page-item">
+                                  <a href="?page={{ workouts.next_page_number }}" class="page-link bg-dark text-white">Next</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                  <span class="page-link bg-dark">Next</span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                            {% else %}
+                            <div class="card text-white bg-dark mb-4">
+                                <div class="card-body">
+                                    <h4 class="card-title">You don't have any workouts yet.</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">There's no time like the present! 💪</h6>
+                                    <p class="card-text">{{workout.description}}
+                                    </p>
+                                    <a href="/workout" class="card-link">Start a Workout</a>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endfor %}
-                        <p class="text-white text-muted ml-3 mr-3 block"><i class="fa fa-info-circle"></i> <em>Most recent 4 hikes displayed only. Want to see this feature behave differently? <a href="http://sasquatchcreative.com/contact" targer="_blank">Let me know!</a></em></p>
-                        {% else %}
-                        <div class="col-lg-12 pb-4">
-                          <div class="card text-white bg-dark mb-4">
-                              <div class="card-body">
-                                  <h4 class="card-title">You don't have any workouts yet.</h4>
-                                  <h6 class="card-subtitle mb-2 text-muted">There's no time like the present! 💪</h6>
-                                  <p class="card-text">{{workout.description}}
-                                  </p>
-                                  <a href="/workout" class="card-link">Start a Workout</a>
-                              </div>
-                          </div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
             </section>

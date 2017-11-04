@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # access django's `messages` module.
 from .models import User, Workout
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def login(request):
     """If GET, load login page, if POST, login user."""
@@ -63,10 +64,13 @@ def dashboard(request):
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
 
+        # Get recent workouts:
+        recent_workouts = Workout.objects.all().order_by('-id')[:4]
 
         # Gather any page data:
         data = {
             'user': user,
+            'recent_workouts': recent_workouts,
         }
 
         # Load dashboard with data:
@@ -135,6 +139,40 @@ def workout(request, id):
         if request.method == "GET":
             # If get request, load workout page with data:
             return render(request, "workout/workout.html", data)
+
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
+        return redirect("/")
+
+def all_workouts(request):
+    """Loads `View All` Workouts page."""
+
+    try:
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
+
+
+        workout_list = Workout.objects.all().order_by('-id')
+
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(workout_list, 12)
+        try:
+            workouts = paginator.page(page)
+        except PageNotAnInteger:
+            workouts = paginator.page(1)
+        except EmptyPage:
+            workouts = paginator.page(paginator.num_pages)
+
+        # Gather any page data:
+        data = {
+            'user': user,
+            'workouts': workouts,
+        }
+
+        # Load dashboard with data:
+        return render(request, "workout/all_workouts.html", data)
 
     except (KeyError, User.DoesNotExist) as err:
         # If existing session not found:
