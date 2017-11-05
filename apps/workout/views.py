@@ -64,8 +64,8 @@ def dashboard(request):
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
 
-        # Get recent workouts:
-        recent_workouts = Workout.objects.all().order_by('-id')[:4]
+        # Get recent workouts for logged in user:
+        recent_workouts = Workout.objects.filter(user__id=user.id).order_by('-id')[:4]
 
         # Gather any page data:
         data = {
@@ -98,11 +98,16 @@ def new_workout(request):
             return render(request, "workout/add_workout.html", data)
 
         if request.method == "POST":
-            print("$$$$$")
-            print(request.POST)
-            print("$$$$$")
+            # Unpack request.POST for validation as we must add a field and cannot modify the request.POST object itself as it's a tuple:
+            workout = {
+                "name": request.POST["name"],
+                "description": request.POST["description"],
+                "user": user
+            }
+
             # Begin validation of a new workout:
-            validated = Workout.objects.new(**request.POST)
+            validated = Workout.objects.new(**workout)
+
             # If errors, reload register page with errors:
             try:
                 if len(validated["errors"]) > 0:
@@ -154,7 +159,7 @@ def all_workouts(request):
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
 
-        workout_list = Workout.objects.all().order_by('-id')
+        workout_list = Workout.objects.filter(user__id=user.id).order_by('-id')
 
         page = request.GET.get('page', 1)
 

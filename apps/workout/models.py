@@ -199,13 +199,11 @@ class WorkoutManager(models.Manager):
         # Create empty errors list, which we'll return to generate django messages back in our controller:
         errors = []
 
-        print("MODEL IS RUNNING--SEE MODELS.PY")
-
         #-----------#
         #-- NAME: --#
         #-----------#
         # Check if name is less than 2 characters:
-        if len(kwargs["name"][0]) < 2:
+        if len(kwargs["name"]) < 2:
             errors.append('Name is required and must be at least 2 characters long.')
 
         # Check if name contains letters, numbers and basic characters only:
@@ -215,19 +213,19 @@ class WorkoutManager(models.Manager):
         WORKOUT_REGEX = re.compile(r'^\s*[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+(?:\s+[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+)*\s*$')
 
         # Test name against regex object:
-        if not WORKOUT_REGEX.match(kwargs["name"][0]):
+        if not WORKOUT_REGEX.match(kwargs["name"]):
             errors.append('Name must contain letters, numbers and basic characters only.')
 
         #------------------#
         #-- DESCRIPTION: --#
         #------------------#
         # Check if description is less than 2 characters:
-        if len(kwargs["description"][0]) < 2:
+        if len(kwargs["description"]) < 2:
             errors.append('Description is required and must be at least 2 characters long.')
 
         # Check if description contains letters, numbers and basic characters only:
         # Test description against regex object (we'll just use WORKOUT_REGEX again since the pattern has not changed):
-        if not WORKOUT_REGEX.match(kwargs["description"][0]):
+        if not WORKOUT_REGEX.match(kwargs["description"]):
             errors.append('Description must contain letters, numbers and basic characters only.')
 
         # Check for validation errors:
@@ -235,7 +233,7 @@ class WorkoutManager(models.Manager):
         if len(errors) == 0:
             # Create new validated workout:
             validated_workout = {
-                "new_workout": Workout(name=kwargs["name"][0], description=kwargs["description"][0], user=kwargs["user_id"][0]),
+                "new_workout": Workout(name=kwargs["name"], description=kwargs["description"], user=kwargs["user"]),
             }
             # Save new Workout:
             validated_workout["new_workout"].save()
@@ -494,7 +492,7 @@ class Workout(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
     completed = models.BooleanField(default=False)
-    user = models.ForeignKey(User, related_name="workouts", on_delete=models.CASCADE, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = WorkoutManager()

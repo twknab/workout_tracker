@@ -12,7 +12,6 @@ This application is designed to help in logging workouts.
 Basically the USER ID you're sending to your model from your hidden field, is not being accepted by Django's model association. Refresh yourself on django model associations (one to many), and make sure you're setup correctly.
 
 ### Dugout Features (next up):
-- Link workouts to User model -- update queries in views.py to get only workouts for USER -- right now they're getting ALL workouts for ALL users
 - Add exercise feature.
 - Complete workout feature.
 - Get search box to work.
@@ -31,9 +30,11 @@ Basically the USER ID you're sending to your model from your hidden field, is no
 
 - Add strong password authentication.
 
+- Addt'l Security feature: Prune off the password token from any user object that is passed to the front end (make sure the bcrypt hash is 100% unavailable client-side).
+
 - Make `+ Workout` on navigation open Modal window, rather than a separate view file.
 
-- "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency)
+- "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency).
 
 - "Leveling Down" of status and avatar if X number of days since last workout.
 
