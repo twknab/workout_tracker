@@ -88,7 +88,6 @@ class UserManager(models.Manager):
         # If none, hash password, create user and send new user back:
         if len(errors) == 0:
             kwargs["password"][0] = bcrypt.hashpw((kwargs["password"][0]).encode(), bcrypt.gensalt(14))
-            print("NEW PASSWORD:", kwargs["password"][0])
             # Create new validated User:
             validated_user = {
                 "logged_in_user": User(username=kwargs["username"][0], email=kwargs["email"][0], password=kwargs["password"][0], tos_accept=kwargs["tos_accept"][0]),
@@ -200,6 +199,8 @@ class WorkoutManager(models.Manager):
         # Create empty errors list, which we'll return to generate django messages back in our controller:
         errors = []
 
+        print("MODEL IS RUNNING--SEE MODELS.PY")
+
         #-----------#
         #-- NAME: --#
         #-----------#
@@ -234,7 +235,7 @@ class WorkoutManager(models.Manager):
         if len(errors) == 0:
             # Create new validated workout:
             validated_workout = {
-                "new_workout": Workout(name=kwargs["name"][0], description=kwargs["description"][0]),
+                "new_workout": Workout(name=kwargs["name"][0], description=kwargs["description"][0], user=kwargs["user_id"][0]),
             }
             # Save new Workout:
             validated_workout["new_workout"].save()
@@ -242,80 +243,6 @@ class WorkoutManager(models.Manager):
             return validated_workout
         else:
             # Else, if validation fails, print errors to console and return errors object:
-            for error in errors:
-                print("Validation Error: ", error)
-            # Prepare data for controller:
-            errors = {
-                "errors": errors,
-            }
-            return errors
-
-    def login(self, **kwargs):
-        """
-        Validates and logs in a new user.
-
-        Parameters:
-        - `self` - Instance to whom this method belongs.
-        - `**kwargs` - Dictionary object of login values from controller.
-
-        Validations:
-        - All fields required.
-        - Existing User is found.
-        - Password matches User's stored password.
-        """
-
-        # Create empty errors list:
-        errors = []
-
-        #------------------#
-        #--- ALL FIELDS ---#
-        #------------------#
-        # Check that all fields are required:
-        if len(kwargs["username"][0]) < 1 or len(kwargs["password"][0]) < 1:
-            errors.append('All fields are required.')
-        else:
-            #------------------#
-            #---- EXISTING ----#
-            #------------------#
-            # Look for existing User to login by username:
-            try:
-                logged_in_user = User.objects.get(username=kwargs["username"][0])
-
-                #------------------#
-                #---- PASSWORD ----#
-                #------------------#
-                # Compare passwords with bcrypt:
-                # Note: We must encode both prior to testing
-                try:
-
-                    password = kwargs["password"][0].encode()
-                    hashed = logged_in_user.password.encode()
-
-                    if not (bcrypt.checkpw(password, hashed)):
-                        print("ERROR: PASSWORD IS INCORRECT")
-                        # Note: We send back a general error that does not specify what credential is invalid: this is for security purposes and is admittedly a slight inconvenience to our user, but makes it harder to gather information from the server during brute for attempts
-                        errors.append("Username or password is incorrect.")
-
-                except ValueError:
-                    # If user's stored password is unable to be used by bcrypt (likely b/c password is not hashed):
-                    errors.append('This user is corrupt. Please contact the administrator.')
-
-            # If existing User is not found:
-            except User.DoesNotExist:
-                print("ERROR: USERNAME IS INVALID")
-                # Note: See password validation note above:
-                errors.append('Username or password is incorrect.')
-
-        # If no validation errors, return logged in user:
-        if len(errors) == 0:
-            # Prepare data for controller:
-            validated_user = {
-                "logged_in_user": logged_in_user,
-            }
-            # Send back validated logged in User:
-            return validated_user
-        # Else, if validation fails print errors and return errors to controller:
-        else:
             for error in errors:
                 print("Validation Error: ", error)
             # Prepare data for controller:
@@ -548,8 +475,6 @@ class WorkoutManager(models.Manager):
     #         }
     #         return errors
 
-    test = "This is just a string."
-
 class User(models.Model):
     """Creates instances of `User`."""
 
@@ -569,6 +494,7 @@ class Workout(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
     completed = models.BooleanField(default=False)
+    user = models.ForeignKey(User, related_name="workouts", on_delete=models.CASCADE, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = WorkoutManager()

@@ -88,7 +88,6 @@ def new_workout(request):
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
 
-
         # Gather any page data:
         data = {
             'user': user,
@@ -99,6 +98,9 @@ def new_workout(request):
             return render(request, "workout/add_workout.html", data)
 
         if request.method == "POST":
+            print("$$$$$")
+            print(request.POST)
+            print("$$$$$")
             # Begin validation of a new workout:
             validated = Workout.objects.new(**request.POST)
             # If errors, reload register page with errors:
@@ -151,7 +153,6 @@ def all_workouts(request):
     try:
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
-
 
         workout_list = Workout.objects.all().order_by('-id')
 
