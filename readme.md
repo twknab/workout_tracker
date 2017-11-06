@@ -3,13 +3,11 @@
 This application is designed to help in logging workouts.
 
 # Features
-- User login and registration.
-- Add new workout feature.
-- View all workouts feature.
-- View individual workouts feature.
-
-# Where I left Off:
-Basically the USER ID you're sending to your model from your hidden field, is not being accepted by Django's model association. Refresh yourself on django model associations (one to many), and make sure you're setup correctly.
+- Login or Register new Users.
+- Add a new workout.
+- View workout and add exercises.
+- Complete a workout.
+- View all past workouts.
 
 ### Dugout Features (next up):
 - Get search box to work.
@@ -18,7 +16,7 @@ Basically the USER ID you're sending to your model from your hidden field, is no
 - Red slivers on input fields (upper left and right corners)
 
 ### Feature Upgrades to Build:
-- Add categories to workout and update forms so other workouts than just strength training may be added. Here's a list: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility']
+- Add categories to workout and update forms so other workouts than just strength training may be added. Here's a list: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility'] or activities like ['Biking', 'Run', 'Walk', 'Hiking']
 
 - Add notes to a workout.
 
@@ -37,10 +35,3 @@ Basically the USER ID you're sending to your model from your hidden field, is no
 - "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency).
 
 - "Leveling Down" of status and avatar if X number of days since last workout.
-
-- Add workout categories and other form types for other types of activities and workout records.
-
-
-**OR**
-
-- User's avatars upgrade along with their status (see downloaded .AI file for a set of avatar images that could be used for various levels)
