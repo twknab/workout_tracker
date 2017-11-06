@@ -11,11 +11,18 @@ This application is designed to help in logging workouts.
 
 ### Dugout Features (next up):
 - Get search box to work.
+- Delete an exercise.
+- Delete a workout.
+- Edit a workout.
 
 ### Fix:
 - Red slivers on input fields (upper left and right corners)
 
 ### Wishlist / Feature Upgrades:
+- Add workout stats for each workout (total volume lifted, total # of reps).
+
+- Add workout stats for the dashboard (total volume lifted, total # of reps).
+
 - Add categories to workout and update forms so other workouts than just strength training may be added. Here's a list: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility'] or activities like ['Biking', 'Run', 'Walk', 'Hiking']
 
 - Add notes to a workout.
