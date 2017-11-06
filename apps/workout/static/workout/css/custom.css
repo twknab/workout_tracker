@@ -10,6 +10,24 @@
 /*    LOGIN / REGISTER   */
 /*************************/
 
+/* Remove border radius from inputs */
+.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn {
+	border-radius:0rem;
+}
+
+input.input-material:focus {
+	border-color: #ff3f3f;
+	border-radius: 0rem !important;
+	-webkit-border-radius: 0rem !important;
+	border-top: 0px;
+	border-right: 0px;
+	border-left: 0px;
+}
+
+input.input-material.less-dark {
+	background: #2D3035;
+}
+
  /* Give login and registration page translucent background */
 .login-page .form-holder .info {
 	background: rgba(33, 37, 41, 0.35) !important;
