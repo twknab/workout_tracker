@@ -57,6 +57,21 @@ def register(request):
             # Load Dashboard:
             return redirect('/dashboard')
 
+def logout(request):
+    """Logs out current user."""
+
+    try:
+        # Deletes session:
+        del request.session['user_id']
+        # Adds success message:
+        messages.success(request, "You have been logged out.", extra_tags='logout')
+
+    except KeyError:
+        pass
+
+    # Return to index page:
+    return redirect("/")
+
 def dashboard(request):
     """Loads dashboard."""
 
@@ -186,7 +201,7 @@ def all_workouts(request):
         messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
 
-def new_exercise(request, id):
+def exercise(request, id):
     """If POST, submit new exercise."""
 
     try:
@@ -199,6 +214,7 @@ def new_exercise(request, id):
             return redirect("/workout/" + id)
 
         if request.method == "POST":
+
             # Unpack request.POST for validation as we must add a field and cannot modify the request.POST object itself as it's a tuple:
             exercise = {
                 "name": request.POST["name"],
@@ -207,8 +223,9 @@ def new_exercise(request, id):
                 "workout": Workout.objects.get(id=id),
             }
 
+            print(exercise)
             # Begin validation of a new exercise:
-            validated = Workout.objects.new(**exercise)
+            validated = Exercise.objects.new(**exercise)
 
             # If errors, reload register page with errors:
             try:
@@ -233,17 +250,31 @@ def new_exercise(request, id):
         messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
 
-def logout(request):
-    """Logs out current user."""
+def complete_workout(request, id):
+    """If POST, complete a workout."""
 
     try:
-        # Deletes session:
-        del request.session['user_id']
-        # Adds success message:
-        messages.success(request, "You have been logged out.", extra_tags='logout')
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
 
-    except KeyError:
-        pass
+        if request.method == "GET":
+            # If get request, bring back to workout page.
+            # Note, for now, GET request for this method not being utilized:
+            return redirect("/workout/" + id)
 
-    # Return to index page:
-    return redirect("/")
+        if request.method == "POST":
+
+            # Update Workout.completed field for this instance:
+            workout = Workout.objects.get(id=id)
+            workout.completed = True
+            workout.save()
+
+            print("Workout completed.")
+
+            # Return to dashboard:
+            return redirect('/dashboard')
+
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
+        return redirect("/")

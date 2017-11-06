@@ -12,8 +12,6 @@ This application is designed to help in logging workouts.
 Basically the USER ID you're sending to your model from your hidden field, is not being accepted by Django's model association. Refresh yourself on django model associations (one to many), and make sure you're setup correctly.
 
 ### Dugout Features (next up):
-- Add exercise feature.
-- Complete workout feature.
 - Get search box to work.
 
 ### Fix:

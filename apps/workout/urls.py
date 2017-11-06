@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^dashboard$', views.dashboard), # get dashboard
     url(r'^workout$', views.new_workout), # get workout page / add workout
     url(r'^workout/(?P<id>\d*)$', views.workout), # get workout / update workout
+    url(r'^workout/(?P<id>\d*)/exercise$', views.exercise), # add exercise
+    url(r'^workout/(?P<id>\d*)/complete$', views.complete_workout), # complete workout
     url(r'^workouts$', views.all_workouts), # get all workouts
 ]

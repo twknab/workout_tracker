@@ -1,6 +1,7 @@
 from django.db import models
 import re # regex for email validation
 import bcrypt # bcrypt for password encryption/decryption
+from decimal import * # for decimal number purposes
 
 class UserManager(models.Manager):
     """Additional instance method functions for `User`"""
@@ -249,230 +250,6 @@ class WorkoutManager(models.Manager):
             }
             return errors
 
-
-    # def update_profile(self, **kwargs):
-    #     """
-    #     Updates a User's information.
-    #
-    #     Parameters:
-    #     - `self` - Instance to whom this method belongs.
-    #     - `**kwargs` - Dictionary object of updated information from controller.
-    #
-    #     Validations:
-    #     - First Name / Last Name - Required; No fewer than 2 characters; letters only
-    #     - Email - Required, Valid Format, Not Taken
-    #     """
-    #
-    #     errors = [] # empty err object
-    #
-    #     #------------------------#
-    #     #-- FIRST / LAST NAME: --#
-    #     #------------------------#
-    #     # Check if fields are empty:
-    #     if len(kwargs["first_name"]) < 2 or len(kwargs["last_name"]) < 2:
-    #         errors.append("First and last name required and must be at least 2 characters.")
-    #
-    #     # Check if first_name or last_name contains letters only:
-    #     alphachar_regex = re.compile(r'^[a-zA-Z]*$') # Create regex object
-    #     # Test first_name and last_name against regex object:
-    #     if not alphachar_regex.match(kwargs["first_name"]) or not alphachar_regex.match(kwargs["last_name"]):
-    #         errors.append('First and last name must be letters only.')
-    #
-    #     #------------#
-    #     #-- EMAIL: --#
-    #     #------------#
-    #     # Ensure that email is at least 5 characters:
-    #     if len(kwargs["email"]) < 5:
-    #         errors.append("Email is required and must be at least 5 characters.")
-    #
-    #     # Check if email submitted is different than current email on record:
-    #     if User.objects.get(id=kwargs["user_id"]).email != kwargs["email"]:
-    #         # Check if email field is empty:
-    #         if len(kwargs["email"]) < 5:
-    #             errors.append('Email field must be at least 5 characters.')
-    #
-    #         # Else if email is greater than 5 characters:
-    #         else:
-    #             # Check if email is in valid format (using regex):
-    #             email_regex = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
-    #             if not email_regex.match(kwargs["email"]):
-    #                 errors.append('Email format is invalid.')
-    #             else:
-    #                 try:
-    #                     # If email has not changed, pass, otherwise check if already registered:
-    #                     if User.objects.get(id=kwargs["edit_user_id"]).email == kwargs["email"]:
-    #                         pass
-    #
-    #                     else:
-    #                         #---------------#
-    #                         #-- EXISTING: --#
-    #                         #---------------#
-    #                         # Check for existing User via email:
-    #                         if len(User.objects.filter(email=kwargs["email"])) > 0:
-    #                             errors.append('Email address already registered.')
-    #                 except KeyError:
-    #                     # If email has not changed, pass, otherwise check if already registered:
-    #                     if User.objects.get(id=kwargs["user_id"]).email == kwargs["email"]:
-    #                         pass
-    #                     else:
-    #                         #---------------#
-    #                         #-- EXISTING: --#
-    #                         #---------------#
-    #                         # Check for existing User via email:
-    #                         if len(User.objects.filter(email=kwargs["email"])) > 0:
-    #                             errors.append('Email address already registered.')
-    #
-    #
-    #     # Check for validation errors:
-    #     # If none, update information for user:
-    #     if len(errors) == 0:
-    #         print "User profile data update passed validation..."
-    #
-    #         # Updating user:
-    #         """
-    #         The three scenarios:
-    #         1. Normal User Updating their profile
-    #         2. Admin User Updating their profile
-    #         3. Admin User Updating Normal User profile (includes "edit_user_id")
-    #         """
-    #
-    #         # If user is not admin, simply update user profile:
-    #         if User.objects.get(id=kwargs["user_id"]).user_level == 0:
-    #             User.objects.filter(id=kwargs["user_id"]).update(first_name=kwargs["first_name"], last_name=kwargs["last_name"], email=kwargs["email"])
-    #             print "User information updated."
-    #             # Return updated user:
-    #             return User.objects.get(id=kwargs["user_id"])
-    #
-    #
-    #         # If user is admin, check if this is a self profile update, or updating another user:
-    #         if User.objects.get(id=kwargs["user_id"]).user_level == 1:
-    #             # If edit_user_id exists, this is an admin edit to another user:
-    #             if "edit_user_id" in kwargs:
-    #                 print "Admin user update detected..."
-    #                 # Update user by `edit_user_id`, including user level:
-    #                 User.objects.filter(id=kwargs["edit_user_id"]).update(first_name=kwargs["first_name"], last_name=kwargs["last_name"], email=kwargs["email"], user_level=kwargs["user_level"])
-    #                 # Return user whom was edited:
-    #                 return User.objects.get(id=kwargs["edit_user_id"])
-    #             else:
-    #                 # Else if edit_user_id does not exist, this is an admin self-profile change:
-    #                 print "Admin profile update detected..."
-    #                 # Update user by `user_id`
-    #                 User.objects.filter(id=kwargs["user_id"]).update(first_name=kwargs["first_name"], last_name=kwargs["last_name"], email=kwargs["email"])
-    #                 return User.objects.get(id=kwargs["user_id"])
-    #
-    #
-    #     else:
-    #         # Else, if validation fails, print errors to console and return errors object:
-    #         print "Errors validating User registration."
-    #         for error in errors:
-    #             print "Validation Error: ", error
-    #         # Prepare data for controller:
-    #         errors = {
-    #             "errors": errors,
-    #         }
-    #         return errors
-
-    # def update_password(self, **kwargs):
-    #     """
-    #     Updates a User's password.
-    #
-    #     Parameters:
-    #     - `self` - Instance to whom this method belongs.
-    #     - `**kwargs` - Dictionary object containing new password from controller.
-    #
-    #     Validations:
-    #     - Password - Required; Min 8 char, Matches Password Confirmation
-    #     """
-    #
-    #     errors = [] # empty errors object
-    #
-    #     #---------------#
-    #     #-- PASSWORD: --#
-    #     #---------------#
-    #     # Check if password is less than 8 characters:
-    #     if len(kwargs["password"]) < 8:
-    #         errors.append('Password fields are required and must be at least 8 characters.')
-    #     else:
-    #         # Check if password matches confirmation password:
-    #         if kwargs["password"] != kwargs["confirm_pwd"]:
-    #             errors.append('Password and confirmation password must match.')
-    #
-    #     # Check for validation errors:
-    #     # If none, hash password, create user and send new user back:
-    #     if len(errors) == 0:
-    #
-    #         """
-    #         Three Scenarios:
-    #         1. User updating their own password.
-    #         2. Admin updating their own password.
-    #         3. Admin updating a normal user's password.
-    #         """
-    #
-    #         # Check if admin is updating another user's password:
-    #         if "edit_user_id" in kwargs:
-    #             print "Admin password update for normal user detected..."
-    #             # Update password for user with ID as `edit_user_id`:
-    #             print "Password validated...hashing..."
-    #             User.objects.filter(id=kwargs["edit_user_id"]).update(password=bcrypt.hashpw(kwargs["password"].encode(), bcrypt.gensalt(14)))
-    #             print "Password hashed..."
-    #             # Return created User:
-    #             return User.objects.filter(id=kwargs["edit_user_id"])
-    #         else:
-    #             print "Profile password update detected..."
-    #             print "Password validated...hashing..."
-    #             User.objects.filter(id=kwargs["user_id"]).update(password=bcrypt.hashpw(kwargs["password"].encode(), bcrypt.gensalt(14)))
-    #             print "Password hashed..."
-    #             # Return created User:
-    #             return User.objects.filter(id=kwargs["user_id"])
-    #     else:
-    #         # Else, if validation fails, print errors to console and return errors object:
-    #         print "Errors validating password update."
-    #         for error in errors:
-    #             print "Validation Error: ", error
-    #         # Prepare data for controller:
-    #         errors = {
-    #             "errors": errors,
-    #         }
-    #         return errors
-
-    # def update_profile_description(self, **kwargs):
-    #     """
-    #     Updates a User's description.
-    #
-    #     Parameters:
-    #     - `self` - Instance to whom this method belongs.
-    #     - `**kwargs` - Dictionary object containing new password from controller.
-    #
-    #     Validations:
-    #     - Description - Less than 1000 characters. Not required.
-    #     """
-    #
-    #     errors = [] # empty errors object
-    #
-    #     #------------------#
-    #     #-- DESCRIPTION: --#
-    #     #------------------#
-    #     # Check if description less than 500 characters:
-    #     if len(kwargs["description"]) > 500:
-    #         errors.append('Description must be less than 500 characaters.')
-    #
-    #     # Check for validation errors, if none, update description:
-    #     if len(errors) == 0:
-    #         print "Description validated..."
-    #         User.objects.filter(id=kwargs["user_id"]).update(description=kwargs["description"])
-    #         # Return created User:
-    #         return User.objects.filter(id=kwargs["user_id"])
-    #     else:
-    #         # Else, if validation fails, print errors to console and return errors object:
-    #         print "Errors validating description."
-    #         for error in errors:
-    #             print "Validation Error: ", error
-    #         # Prepare data for controller:
-    #         errors = {
-    #             "errors": errors,
-    #         }
-    #         return errors
-
 class ExerciseManager(models.Manager):
     """Additional instance method functions for `Exercise`"""
 
@@ -520,13 +297,24 @@ class ExerciseManager(models.Manager):
         #-------------#
         #-- WEIGHT: --#
         #-------------#
+        # Convert to floating number rounded to tenth place:
+        kwargs["weight"] = round(float(kwargs["weight"]), 1)
+
+        print("&&&&&&&&&&&&&&&&&&&&&&&")
+        print("&&&&&&&&&&&&&&&&&&&&&&&")
+        print(kwargs["weight"])
+        print("&&&&&&&&&&&&&&&&&&&&&&&")
+        print("&&&&&&&&&&&&&&&&&&&&&&&")
         # Ensure weight is a positive number:
         if (kwargs["weight"] < 0):
             errors.append('Weight cannot be a negative number.')
 
-        #-----------------#
+        #------------------#
         #-- REPETITIONS: --#
-        #-----------------#
+        #------------------#
+        # Convert to floating number rounded to tenth place:
+        kwargs["repetitions"] = round(float(kwargs["repetitions"]), 1)
+
         # Ensure repetitions is a positive number:
         if (kwargs["repetitions"] < 0):
             errors.append('Weight cannot be a negative number.')
@@ -582,7 +370,7 @@ class Exercise(models.Model):
 
     name = models.CharField(max_length=50)
     weight = models.DecimalField(max_digits=999, decimal_places=1)
-    repetitions = models.IntegerField(default=False)
+    repetitions = models.DecimalField(max_digits=999, decimal_places=1)
     category = models.CharField(max_length=50, default="Strength Training") # Add more categories in the future: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility']
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
