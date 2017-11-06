@@ -6,12 +6,12 @@ This application is designed to help in logging workouts.
 - Login or Register new Users.
 - Add a new workout.
 - View workout and add exercises.
+- Delete an exercise.
 - Complete a workout.
 - View all past workouts.
 
 ### Dugout Features (next up):
 - Get search box to work.
-- Delete an exercise.
 - Delete a workout.
 - Edit a workout.
 

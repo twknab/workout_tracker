@@ -202,15 +202,17 @@ def all_workouts(request):
         return redirect("/")
 
 def exercise(request, id):
-    """If POST, submit new exercise."""
+    """If POST, submit new exercise, if GET delete exercise."""
 
     try:
         # Check for valid session:
         user = User.objects.get(id=request.session["user_id"])
 
         if request.method == "GET":
-            # If get request, bring back to workout page.
-            # Note, for now, GET request for this method not being utilized:
+
+            # Delete exercise by exercise id (from hidden field):
+            Exercise.objects.get(id=request.GET["exercise_id"]).delete()
+
             return redirect("/workout/" + id)
 
         if request.method == "POST":

@@ -303,7 +303,7 @@ class ExerciseManager(models.Manager):
             kwargs["repetitions"] = round(float(kwargs["repetitions"]), 1)
 
             # Ensure weight and repetitions is a positive number:
-            if (kwargs["weight"] or kwargs["repetitions"] < 0):
+            if (kwargs["weight"] < 0) or (kwargs["repetitions"] < 0):
                 errors.append('Weight and repetitions must be a positive number.')
 
             # Ensure repetitions is a positive number:
