@@ -11,4 +11,8 @@ $( document ).ready(function() {
     return confirm("Are you sure you want to delete this exercise?");
   });
 
+  $( '#delete-workout' ).click(function() {
+    return confirm("Are you sure you want to delete this workout? This cannot be undone.");
+  });
+
 });

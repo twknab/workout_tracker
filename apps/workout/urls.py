@@ -15,5 +15,7 @@ urlpatterns = [
     url(r'^workout/(?P<id>\d*)$', views.workout), # get workout / update workout
     url(r'^workout/(?P<id>\d*)/exercise$', views.exercise), # add exercise
     url(r'^workout/(?P<id>\d*)/complete$', views.complete_workout), # complete workout
+    url(r'^workout/(?P<id>\d*)/edit$', views.edit_workout), # edit workout
+    url(r'^workout/(?P<id>\d*)/delete$', views.delete_workout), # delete workout
     url(r'^workouts$', views.all_workouts), # get all workouts
 ]

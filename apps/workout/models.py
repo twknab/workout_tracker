@@ -250,6 +250,76 @@ class WorkoutManager(models.Manager):
             }
             return errors
 
+    def update(self, **kwargs):
+        """
+        Validates and updates a workout.
+
+        Parameters:
+        - `self` - Instance to whom this method belongs.
+        - `**kwargs` - Dictionary object of workout values from controller to be validated.
+
+        Validations:
+        - Name - Required; No fewer than 2 characters; letters, basic characters, numbers only
+        - Description - Required; letters, basic characters, numbers only
+
+        Developer Note:
+        - This section utilizes essentially the exact same validations as the `new()` method above (in this same WorkoutManager class). However, in this particular case, we're updating a record rather than creating one. At a later point, it might be good to refactor this section/these validations.
+        """
+
+        # Create empty errors list, which we'll return to generate django messages back in our controller:
+        errors = []
+
+        #-----------#
+        #-- NAME: --#
+        #-----------#
+        # Check if name is less than 2 characters:
+        if len(kwargs["name"]) < 2:
+            errors.append('Name is required and must be at least 2 characters long.')
+
+        # Check if name contains letters, numbers and basic characters only:
+        '''
+        Note: The following regex pattern matches for strings which start or do not start with spaces, whom contain letters, numbers and some basic character sequences, followed by either more spaces or more characters. This prevents empty string submissions.
+        '''
+        WORKOUT_REGEX = re.compile(r'^\s*[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+(?:\s+[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+)*\s*$')
+
+        # Test name against regex object:
+        if not WORKOUT_REGEX.match(kwargs["name"]):
+            errors.append('Name must contain letters, numbers and basic characters only.')
+
+        #------------------#
+        #-- DESCRIPTION: --#
+        #------------------#
+        # Check if description is less than 2 characters:
+        if len(kwargs["description"]) < 2:
+            errors.append('Description is required and must be at least 2 characters long.')
+
+        # Check if description contains letters, numbers and basic characters only:
+        # Test description against regex object (we'll just use WORKOUT_REGEX again since the pattern has not changed):
+        if not WORKOUT_REGEX.match(kwargs["description"]):
+            errors.append('Description must contain letters, numbers and basic characters only.')
+
+        # Check for validation errors:
+        # If none, create workout and return new workout:
+        if len(errors) == 0:
+
+            # Update workout:
+            workout = Workout.objects.filter(id=kwargs['workout_id']).update(name=kwargs['name'], description=kwargs["description"])
+
+            # Return updated Workout:
+            updated_workout = {
+                "updated_workout": workout
+            }
+            return updated_workout
+        else:
+            # Else, if validation fails, print errors to console and return errors object:
+            for error in errors:
+                print("Validation Error: ", error)
+            # Prepare data for controller:
+            errors = {
+                "errors": errors,
+            }
+            return errors
+
 class ExerciseManager(models.Manager):
     """Additional instance method functions for `Exercise`"""
 

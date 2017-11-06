@@ -3,21 +3,25 @@
 This application is designed to help in logging workouts.
 
 # Features
-- Login or Register new Users.
+- Register new users.
+- Login existing users.
 - Add a new workout.
-- View workout and add exercises.
-- Delete an exercise.
+- Add exercises to a workout.
+- Delete an exercise (for incomplete workouts only).
 - Complete a workout.
+- View workout.
+- Edit a workout.
+- Delete a workout.
 - View all past workouts.
 
 ### Dugout Features (next up):
-- Get search box to work.
-- Delete a workout.
-- Edit a workout.
-
-### Fix:
+- Search box capable of searching these fields:
+  - workout: `name`, `description`
+  - exercise: `name`, `weight`, `repetitions`
 
 ### Wishlist / Feature Upgrades:
+- Search box.
+
 - Add workout stats for each workout (total volume lifted, total # of reps).
 
 - Add workout stats for the dashboard (total volume lifted, total # of reps).
@@ -41,3 +45,5 @@ This application is designed to help in logging workouts.
 - "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency).
 
 - "Leveling Down" of status and avatar if X number of days since last workout.
+
+- User profile and user delete functionality.
