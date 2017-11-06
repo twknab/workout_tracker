@@ -20,6 +20,8 @@ Basically the USER ID you're sending to your model from your hidden field, is no
 - Red slivers on input fields (upper left and right corners)
 
 ### Feature Upgrades to Build:
+- Add categories to workout and update forms so other workouts than just strength training may be added. Here's a list: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility']
+
 - Add notes to a workout.
 
 - Add `Showing 31 to 40 of 57 records` to `View Workouts` page.

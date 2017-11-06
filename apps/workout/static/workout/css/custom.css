@@ -165,3 +165,14 @@ i.fa.fa-plus-square {
 .bg-dark.add-exercise {
 	background-color: #1d2023 !important;
 }
+
+/* Hides spin buttons on number inputs */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Supports Mozilla */
+input[type=number] {
+    -moz-appearance:textfield;
+}

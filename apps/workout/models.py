@@ -229,14 +229,14 @@ class WorkoutManager(models.Manager):
             errors.append('Description must contain letters, numbers and basic characters only.')
 
         # Check for validation errors:
-        # If none, create workout and load workout page:
+        # If none, create workout and return new workout:
         if len(errors) == 0:
             # Create new validated workout:
             validated_workout = {
-                "new_workout": Workout(name=kwargs["name"], description=kwargs["description"], user=kwargs["user"]),
+                "workout": Workout(name=kwargs["name"], description=kwargs["description"], user=kwargs["user"]),
             }
             # Save new Workout:
-            validated_workout["new_workout"].save()
+            validated_workout["workout"].save()
             # Return created Workout:
             return validated_workout
         else:
@@ -473,6 +473,86 @@ class WorkoutManager(models.Manager):
     #         }
     #         return errors
 
+class ExerciseManager(models.Manager):
+    """Additional instance method functions for `Exercise`"""
+
+    def new(self, **kwargs):
+        """
+        Validates and registers a new exercise.
+
+        Parameters:
+        - `self` - Instance to whom this method belongs.
+        - `**kwargs` - Dictionary object of exercise values from controller to be validated.
+
+        Validations:
+        - Name - Required; No fewer than 2 characters; letters, basic characters, numbers only
+        - Weight (lbs) - Required; Numbers only, Decimals allowed.
+        - Repetitions - Required; Numbers only, no Decimals.
+        """
+
+        # Create empty errors list, which we'll return to generate django messages back in our controller:
+        errors = []
+
+        #---------------#
+        #-- REQUIRED: --#
+        #---------------#
+        # Check if all fields are present:
+        if not kwargs['name'] or not kwargs['weight'] or not kwargs['repetitions']:
+            errors.append('All fields are required.')
+
+        #-----------#
+        #-- NAME: --#
+        #-----------#
+        # Check if name is less than 2 characters:
+        if len(kwargs["name"]) < 2:
+            errors.append('Name is required and must be at least 2 characters long.')
+
+        # Check if name contains letters, numbers and basic characters only:
+        '''
+        Note: The following regex pattern matches for strings which start or do not start with spaces, whom contain letters, numbers and some basic character sequences, followed by either more spaces or more characters. This prevents empty string submissions.
+        '''
+        EXERCISE_REGEX = re.compile(r'^\s*[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+(?:\s+[A-Za-z0-9!@#$%^&*\"\':;\/?,<.>()\]\[~`]+)*\s*$')
+
+        # Test name against regex object:
+        if not EXERCISE_REGEX.match(kwargs["name"]):
+            errors.append('Name must contain letters, numbers and basic characters only.')
+
+        #-------------#
+        #-- WEIGHT: --#
+        #-------------#
+        # Ensure weight is a positive number:
+        if (kwargs["weight"] < 0):
+            errors.append('Weight cannot be a negative number.')
+
+        #-----------------#
+        #-- REPETITIONS: --#
+        #-----------------#
+        # Ensure repetitions is a positive number:
+        if (kwargs["repetitions"] < 0):
+            errors.append('Weight cannot be a negative number.')
+
+
+        # Check for validation errors:
+        # If none, create exercise and return created exercise:
+        if len(errors) == 0:
+            # Create new validated exercise:
+            validated_exercise = {
+                "exercise": Exercise(name=kwargs["name"], weight=kwargs["weight"], repetitions=kwargs["repetitions"], workout=kwargs["workout"]),
+            }
+            # Save new Workout:
+            validated_exercise["exercise"].save()
+            # Return created Workout:
+            return validated_exercise
+        else:
+            # Else, if validation fails, print errors to console and return errors object:
+            for error in errors:
+                print("Validation Error: ", error)
+            # Prepare data for controller:
+            errors = {
+                "errors": errors,
+            }
+            return errors
+
 class User(models.Model):
     """Creates instances of `User`."""
 
@@ -496,3 +576,15 @@ class Workout(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = WorkoutManager()
+
+class Exercise(models.Model):
+    """Creates instances of `Exercise`."""
+
+    name = models.CharField(max_length=50)
+    weight = models.DecimalField(max_digits=999, decimal_places=1)
+    repetitions = models.IntegerField(default=False)
+    category = models.CharField(max_length=50, default="Strength Training") # Add more categories in the future: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility']
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = ExerciseManager()

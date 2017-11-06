@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages # access django's `messages` module.
-from .models import User, Workout
+from .models import User, Workout, Exercise
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def login(request):
@@ -121,7 +121,7 @@ def new_workout(request):
                 # If validation successful, load newly created hike page:
                 print("Workout passed validation and has been created.")
 
-                id = str(validated['new_workout'].id)
+                id = str(validated['workout'].id)
                 # Load workout:
                 return redirect('/workout/' + id)
 
@@ -141,6 +141,7 @@ def workout(request, id):
         data = {
             'user': user,
             'workout': Workout.objects.get(id=id),
+            'exercises': Exercise.objects.filter(workout__id=id),
         }
 
         if request.method == "GET":
@@ -179,6 +180,53 @@ def all_workouts(request):
 
         # Load dashboard with data:
         return render(request, "workout/all_workouts.html", data)
+
+    except (KeyError, User.DoesNotExist) as err:
+        # If existing session not found:
+        messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
+        return redirect("/")
+
+def new_exercise(request, id):
+    """If POST, submit new exercise."""
+
+    try:
+        # Check for valid session:
+        user = User.objects.get(id=request.session["user_id"])
+
+        if request.method == "GET":
+            # If get request, bring back to workout page.
+            # Note, for now, GET request for this method not being utilized:
+            return redirect("/workout/" + id)
+
+        if request.method == "POST":
+            # Unpack request.POST for validation as we must add a field and cannot modify the request.POST object itself as it's a tuple:
+            exercise = {
+                "name": request.POST["name"],
+                "weight": request.POST["weight"],
+                "repetitions": request.POST["repetitions"],
+                "workout": Workout.objects.get(id=id),
+            }
+
+            # Begin validation of a new exercise:
+            validated = Workout.objects.new(**exercise)
+
+            # If errors, reload register page with errors:
+            try:
+                if len(validated["errors"]) > 0:
+                    print("Exercise could not be created.")
+
+                    # Loop through errors and Generate Django Message for each with custom level and tag:
+                    for error in validated["errors"]:
+                        messages.error(request, error, extra_tags='exercise')
+
+                    # Reload workout page:
+                    return redirect("/workout/" + id)
+            except KeyError:
+                # If validation successful, load newly created hike page:
+                print("Exercise passed validation and has been created.")
+
+                # Reload workout:
+                return redirect('/workout/' + id)
 
     except (KeyError, User.DoesNotExist) as err:
         # If existing session not found:

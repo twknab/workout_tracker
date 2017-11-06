@@ -110,11 +110,11 @@
                                       </div>
                                       <!-- Exercise Weight -->
                                       <div class="form-group col-md-4">
-                                        <input id="weight" type="text" name="weight" class="input-material form-control-lg mr-4" placeholder="Weight (lbs)">
+                                        <input id="weight" type="number" name="weight" class="input-material form-control-lg mr-4" placeholder="Weight (lbs)">
                                       </div>
                                       <!-- Exercise Repititions -->
                                       <div class="form-group col-md-4">
-                                        <input id="reps" type="text" name="reps" class="input-material form-control-lg mr-4" placeholder="Repetitions">
+                                        <input id="reps" type="number" name="reps" class="input-material form-control-lg mr-4" placeholder="Repetitions">
                                       </div>
                                     </div>
                                     <!-- Add Workout Button -->
@@ -130,15 +130,13 @@
                             <hr>
                             <!-- Exercises Table -->
                             <div id="exercise-wrapper" class="mb-5">
+
+                            {% for exercise in exercises %}
+                              <p>{{exercise}}</p>
+                            {% endfor %}
+
                               <!-- <h4 class="card-title">Exercise Data</h4> -->
                               <table class="table table-striped table-sm">
-                                  <!-- <thead> -->
-                                      <!-- <tr> -->
-                                          <!-- <th>Name</th> -->
-                                          <!-- <th>Weight</th> -->
-                                          <!-- <th>Repetitions</th> -->
-                                      <!-- </tr> -->
-                                  <!-- </thead> -->
                                   <tbody>
                                       <tr>
                                           <th scope="row">DB Curl</th>
