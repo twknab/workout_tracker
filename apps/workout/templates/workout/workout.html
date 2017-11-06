@@ -95,6 +95,11 @@
                             <h2 class="">{{workout.name}}</h2>
                             <!-- Workout Subtitle -->
                             <small class="text-muted">{{workout.created_at | date}}</small>
+                            <!-- Workout Description -->
+                            {% if workout.description %}
+                            <p class="mt-5">{{workout.description}}</p>
+                            {% endif %}
+                            <!-- Add Exercise -->
                             {% if workout.completed == False %}
                               <div class="card bg-dark add-exercise mb-5 mt-5" style="">
                                 <div class="card-body">
@@ -126,10 +131,6 @@
                                   </form>
                                 </div>
                               </div>
-                            {% endif %}
-                            <!-- Workout Description -->
-                            {% if workout.description %}
-                            <p class="mt-5">{{workout.description}}</p>
                             {% endif %}
                             <hr>
                             <!-- Exercises Table -->
