@@ -294,30 +294,25 @@ class ExerciseManager(models.Manager):
         if not EXERCISE_REGEX.match(kwargs["name"]):
             errors.append('Name must contain letters, numbers and basic characters only.')
 
-        #-------------#
-        #-- WEIGHT: --#
-        #-------------#
-        # Convert to floating number rounded to tenth place:
-        kwargs["weight"] = round(float(kwargs["weight"]), 1)
+        #---------------------------#
+        #-- WEIGHT & REPETITIONS: --#
+        #---------------------------#
+        # Try converting weight and repetitions to floating numbers, rounded to tenth place:
+        try:
+            kwargs["weight"] = round(float(kwargs["weight"]), 1)
+            kwargs["repetitions"] = round(float(kwargs["repetitions"]), 1)
 
-        print("&&&&&&&&&&&&&&&&&&&&&&&")
-        print("&&&&&&&&&&&&&&&&&&&&&&&")
-        print(kwargs["weight"])
-        print("&&&&&&&&&&&&&&&&&&&&&&&")
-        print("&&&&&&&&&&&&&&&&&&&&&&&")
-        # Ensure weight is a positive number:
-        if (kwargs["weight"] < 0):
-            errors.append('Weight cannot be a negative number.')
+            # Ensure weight and repetitions is a positive number:
+            if (kwargs["weight"] or kwargs["repetitions"] < 0):
+                errors.append('Weight and repetitions must be a positive number.')
 
-        #------------------#
-        #-- REPETITIONS: --#
-        #------------------#
-        # Convert to floating number rounded to tenth place:
-        kwargs["repetitions"] = round(float(kwargs["repetitions"]), 1)
+            # Ensure repetitions is a positive number:
+            # if (kwargs["repetitions"] < 0):
+            #     errors.append('Weight cannot be a negative number.')
 
-        # Ensure repetitions is a positive number:
-        if (kwargs["repetitions"] < 0):
-            errors.append('Weight cannot be a negative number.')
+        except ValueError:
+            # If value error, send error:
+            errors.append('Weight and repetitions must be a positive number only, containing at most one decimal place.')
 
 
         # Check for validation errors:

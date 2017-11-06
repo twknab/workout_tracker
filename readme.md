@@ -16,9 +16,6 @@ This application is designed to help in logging workouts.
 - Edit a workout.
 
 ### Fix:
-- Exercise validation to prevent strings (move regex check above the number conversion validation, ie float conversion).
-
-- Change either conversions, way #'s are stored in DB, or some post-query function to cleave the `.0` from reps or weights such as , `165.0 lbs` or `12.0` reps. Could check for decimal points in advance...
 
 ### Wishlist / Feature Upgrades:
 - Add workout stats for each workout (total volume lifted, total # of reps).

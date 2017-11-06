@@ -141,9 +141,9 @@
                                   <tbody>
                                     {% for exercise in exercises %}
                                       <tr>
-                                          <th scope="row">{{exercise.name}}</th>
-                                          <td>{{exercise.weight}} lbs</td>
-                                          <td>{{exercise.repetitions}} reps</td>
+                                          <th scope="row">{{ exercise.name }}</th>
+                                          <td>{{ exercise.weight|floatformat }} lbs</td>
+                                          <td>{{  exercise.repetitions|floatformat}} reps</td>
                                       </tr>
                                     {% endfor %}
                                   </tbody>
