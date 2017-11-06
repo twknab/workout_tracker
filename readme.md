@@ -15,7 +15,7 @@ This application is designed to help in logging workouts.
 ### Fix:
 - Red slivers on input fields (upper left and right corners)
 
-### Feature Upgrades to Build:
+### Wishlist / Feature Upgrades:
 - Add categories to workout and update forms so other workouts than just strength training may be added. Here's a list: ['Strength Training', 'Endurance Training', 'Balance', 'Flexibility'] or activities like ['Biking', 'Run', 'Walk', 'Hiking']
 
 - Add notes to a workout.
