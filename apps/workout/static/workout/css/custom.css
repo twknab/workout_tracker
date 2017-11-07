@@ -1,9 +1,20 @@
 /****************/
 /*    GENERAL   */
 /****************/
+/* Tweak secondary button colors */
 .btn-secondary {
 	background-color: #474b4e;
 	border-color: #45494d;
+}
+
+/* Hide search bar for now (until feature is built) */
+.search-open.nav-link {
+	display: none;
+}
+
+/* Give focused inputs lighter BG color for more user feedback */
+input.input-material:focus {
+	background-color: rgba(255, 255, 255, 0.03);
 }
 
 /*************************/
@@ -203,6 +214,34 @@ input[type=number] {
 	color: #ff1919;
 }
 
-input.input-material:focus {
-	background-color: rgba(255, 255, 255, 0.03);
+/**************************/
+/*         FOOTER         */
+/**************************/
+
+a.sasquatch-footer-link {
+	color: #8a8d93;
+}
+
+a.sasquatch-footer-link:hover {
+	background-color: #ff3f3f;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	color: rgba(255, 255, 255, 0.85);
+	/*color: white;*/
+	/*font-weight: bolder;*/
+	text-decoration: none;
+}
+
+a.sasquatch-footer-link:focus, a.sasquatch-footer-link:active {
+	color: #ff3f3f;
+	/*font-weight: bolder;*/
+	background-color: #2d3035;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }

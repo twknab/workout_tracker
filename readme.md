@@ -14,10 +14,11 @@ This application is designed to help in logging workouts.
 - Delete a workout.
 - View all past workouts.
 
-### Dugout Features (next up):
+### Dugout Feature (next up):
 - Search box capable of searching these fields:
   - workout: `name`, `description`
   - exercise: `name`, `weight`, `repetitions`
+  - use a query + a view + django pagination?
 
 ### Wishlist / Feature Upgrades:
 - Search box.
@@ -34,16 +35,14 @@ This application is designed to help in logging workouts.
 
 - Add workout stopwatch that records workout time.
 
-- Make clicking on Avatar/Name on menu load User Profile page, where user can view personal details and or edit them (including password).
+- Make clicking on Avatar/Name on menu load User Profile page, where user can view personal details and or edit them (including password). Allow user to be able to delete their own profile.
 
 - Add strong password authentication.
 
-- Addt'l Security feature: Prune off the password token from any user object that is passed to the front end (make sure the bcrypt hash is 100% unavailable client-side).
+- Addt'l Security feature: Prune off the password hash from any user object that is passed to the front end (make sure the bcrypt hash is 100% unavailable client-side).
 
 - Make `+ Workout` on navigation open Modal window, rather than a separate view file.
 
 - "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency).
 
 - "Leveling Down" of status and avatar if X number of days since last workout.
-
-- User profile and user delete functionality.

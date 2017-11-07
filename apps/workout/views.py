@@ -156,7 +156,7 @@ def workout(request, id):
         data = {
             'user': user,
             'workout': Workout.objects.get(id=id),
-            'exercises': Exercise.objects.filter(workout__id=id),
+            'exercises': Exercise.objects.filter(workout__id=id).order_by('-updated_at'),
         }
 
         # If get request, load workout page with data:
