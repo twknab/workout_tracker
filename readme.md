@@ -23,6 +23,8 @@ This application is designed to help in logging workouts.
 ### Wishlist / Feature Upgrades:
 - Search box.
 
+- Make nice logo homepage image inspired from fav ico.
+
 - Add workout stats for each workout (total volume lifted, total # of reps).
 
 - Add workout stats for the dashboard (total volume lifted, total # of reps).
