@@ -17,13 +17,6 @@ input.input-material:focus {
 	background-color: rgba(255, 255, 255, 0.03);
 }
 
-/* Increase border radius on menu button */
-nav.navbar .sidebar-toggle {
-	border-radius: 100%;
-	-webkit-border-radius: 100%;
-	-moz-border-radius: 100%;
-}
-
 /*************************/
 /*    LOGIN / REGISTER   */
 /*************************/

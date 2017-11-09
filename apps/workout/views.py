@@ -349,3 +349,8 @@ def complete_workout(request, id):
         # If existing session not found:
         messages.info(request, "You must be logged in to view this page.", extra_tags="invalid_session")
         return redirect("/")
+
+def tos(request):
+    """GET terms of service / user agreement."""
+
+    return render(request, "workout/legal/tos.html")

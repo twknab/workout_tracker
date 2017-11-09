@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^workout/(?P<id>\d*)/edit$', views.edit_workout), # edit workout
     url(r'^workout/(?P<id>\d*)/delete$', views.delete_workout), # delete workout
     url(r'^workouts$', views.all_workouts), # get all workouts
+    url(r'^legal/tos$', views.tos), # get terms of service
 ]
