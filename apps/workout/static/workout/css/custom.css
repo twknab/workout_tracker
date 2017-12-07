@@ -214,6 +214,23 @@ input[type=number] {
 	color: #ff1919;
 }
 
+/***************************/
+/*      ALL WORKOUTS       */
+/***************************/
+
+.all-workouts-table {
+	color: whitesmoke;
+}
+
+.view-link {
+	color: #34D2ED;
+}
+
+.view-link:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
 /**************************/
 /*         FOOTER         */
 /**************************/

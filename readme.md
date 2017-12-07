@@ -15,6 +15,9 @@ This application is designed to help in logging workouts.
 - View all past workouts.
 
 ### Dugout Feature (next up):
+- Allow other types of workouts.
+- Edit exercise feature.
+
 - Search box capable of searching these fields:
   - workout: `name`, `description`
   - exercise: `name`, `weight`, `repetitions`
@@ -22,6 +25,10 @@ This application is designed to help in logging workouts.
 
 ### Wishlist / Feature Upgrades:
 - Search box.
+
+- Edit Exercise Feature
+
+- Rest timer (that can be manually set, but allows for rest times between strength training routines)
 
 - Make nice logo homepage image inspired from fav ico.
 
@@ -48,3 +55,6 @@ This application is designed to help in logging workouts.
 - "Leveling Up" of status AND avatar, depending upon how many completed workouts exist. Presently, "Newbie" is first level. After 5 workouts, change it to "Novice" and so forth -- build a handful of different levels. This is a fun easter-egg feature/cool discovery. (Think of some reward system whereby a user increases in level based upon frequency of workouts, and decreases in level based upon lack of workout frequency).
 
 - "Leveling Down" of status and avatar if X number of days since last workout.
+
+#### Change Log:
+- 12/07/17 - Changed view all workouts page to a table.
