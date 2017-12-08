@@ -1,0 +1,247 @@
+/****************/
+/*    GENERAL   */
+/****************/
+/* Tweak secondary button colors */
+.btn-secondary {
+	background-color: #474b4e;
+	border-color: #45494d;
+}
+
+/* Hide search bar for now (until feature is built) */
+.search-open.nav-link {
+	display: none;
+}
+
+/* Give focused inputs lighter BG color for more user feedback */
+input.input-material:focus {
+	background-color: rgba(255, 255, 255, 0.03);
+}
+
+/*************************/
+/*    LOGIN / REGISTER   */
+/*************************/
+
+/* Remove border radius from inputs */
+.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn {
+	border-radius:0rem;
+}
+
+input.input-material:focus {
+	border-color: #ff3f3f;
+	border-radius: 0rem !important;
+	-webkit-border-radius: 0rem !important;
+	border-top: 0px;
+	border-right: 0px;
+	border-left: 0px;
+}
+
+input.input-material.less-dark {
+	background: #2D3035;
+}
+
+ /* Give login and registration page translucent background */
+.login-page .form-holder .info {
+	background: rgba(33, 37, 41, 0.35) !important;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px #000;
+}
+
+/* Give login and registration headers white color */
+.color-white {
+  color: #ffffff;
+}
+
+/* Reduce height of login and registration panel */
+.login-page .form-holder .info, .login-page .form-holder .form {
+	min-height: 0vh;
+}
+
+/* Make input text color white with text shadow and increase padding */
+input.input-material {
+	padding: 10px;
+	color: #fff;
+	text-shadow:1px 1px 1px #000;
+}
+
+/* Increase font size of logina and registartion header */
+/*.login-page .form-holder .info h1 {
+	font-size: 3.5em;
+}*/
+
+.display-3 {
+	font-size: 4.5rem !important;
+	font-weight: 300 !important;
+	line-height: 1.1 !important;
+}
+
+/* Increase font size of login and registration header paragraph text */
+.login-page .form-holder .info p {
+	font-size: 1.3em;
+}
+
+/* Color match alert background to styling */
+.alert-danger {
+	background-color: #f8b4be;
+	border-color: #f8b4be;
+}
+
+/* Reduce login and registration display text on mobile */
+@media only screen and (max-width: 600px)  {
+  .display-3 {
+    font-size: 2rem !important;
+  }
+	.display-3-intro-subtext {
+		font-size: 1rem !important;
+	}
+}
+
+/* Reduce login and registration display text at exact break point  */
+@media only screen and (max-width: 1200px) and (min-width: 993px)  {
+	.display-3 {
+		font-size: 3.5rem !important;
+	}
+}
+
+/*****************************/
+/*         DASHBOARD         */
+/*****************************/
+
+/* Adjust avatar image */
+.img-fluid.rounded-circle {
+	margin-top: 9px;
+}
+
+/* Customize avatar to show polygon image */
+nav#sidebar .avatar {
+	min-width: initial;
+	max-width: initial;
+	min-height: initial;
+	max-height: initial;
+	border-radius: 0%;
+	overflow: auto;
+	margin-right: 0px;
+	padding: 0px;
+	border: none;
+}
+
+/* Adjust menu username */
+.title {
+	margin-left: 15px;
+}
+
+/* Adjust height and width of avatar image */
+.img-fluid.rounded-circle.avatar {
+	height: 50px;
+	width: 58px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	margin-top: auto;
+}
+
+/* Adjust workout icon spacing */
+nav#sidebar ul a i .fa.fa-plus-square {
+	padding-right: 3px;
+	/*position: relative;
+	left: 2px;*/
+}
+
+i.fa.fa-plus-square {
+	padding-right: 23px !important;
+}
+
+/* Customize dashboard link colors */
+.card-link:hover {
+	color: #BFC1BB;
+}
+
+
+/* Remove border around pagination */
+.page-link {
+	border:none !important;
+}
+
+/* Adjust card columns depending upon viewport */
+/* xs */
+@media only screen and (max-width: 767px)  {
+  .card-columns {
+    column-count: 1;
+  }
+}
+/* sm */
+@media only screen and (max-width: 991px) and (min-width: 768px)  {
+	.card-columns {
+		column-count: 2;
+	}
+}
+/* md */
+@media only screen and (max-width: 1199px) and (min-width: 992px)  {
+	.card-columns {
+		column-count: 3;
+	}
+}
+/* lg */
+@media only screen and (min-width: 1200px)  {
+	.card-columns {
+		column-count: 4;
+	}
+}
+
+/***************************/
+/*         WORKOUT         */
+/***************************/
+
+/* Darken background for add exercise form only */
+.bg-dark.add-exercise {
+	background-color: #1d2023 !important;
+}
+
+/* Hides spin buttons on number inputs */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Supports Mozilla */
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+/* Adjust delete exercise button color */
+.fa.fa-remove.delete-exercise {
+	color: #ff3f3f;
+}
+.fa.fa-remove.delete-exercise:hover {
+	color: #ff1919;
+}
+
+/**************************/
+/*         FOOTER         */
+/**************************/
+
+a.sasquatch-footer-link {
+	color: #8a8d93;
+}
+
+a.sasquatch-footer-link:hover {
+	background-color: #ff3f3f;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	color: rgba(255, 255, 255, 0.85);
+	/*color: white;*/
+	/*font-weight: bolder;*/
+	text-decoration: none;
+}
+
+a.sasquatch-footer-link:focus, a.sasquatch-footer-link:active {
+	color: #ff3f3f;
+	/*font-weight: bolder;*/
+	background-color: #2d3035;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
