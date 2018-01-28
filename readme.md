@@ -24,11 +24,15 @@ This application is designed to help in logging workouts.
   - use a query + a view + django pagination?
 
 ### Wishlist / Feature Upgrades:
+- Checkbox for "Failure" so user can check if they failed on that set.
+
+- Rest timer (that can be manually set, but allows for rest times between strength training routines)
+
+- Be able to delete Workouts
+
 - Search box.
 
 - Edit Exercise Feature
-
-- Rest timer (that can be manually set, but allows for rest times between strength training routines)
 
 - Make nice logo homepage image inspired from fav ico.
 
