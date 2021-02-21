@@ -3,3 +3,4 @@ __pycache__
 .DS_Store
 .bower_components
 db.sqlite3
+.vscode

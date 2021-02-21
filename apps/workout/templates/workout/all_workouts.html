@@ -48,14 +48,17 @@
             <div class="container-fluid d-flex align-items-center justify-content-between ">
                 <div class="navbar-header">
                     <a href="/dashboard" class="navbar-brand">
-                        <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Fitness</strong><strong>Tracker</strong></div>
+                        <div class="brand-text brand-big visible text-uppercase"><strong
+                                class="text-primary">Fitness</strong><strong>Tracker</strong></div>
                         <div class="brand-text brand-sm"><strong class="text-primary">F</strong><strong>T</strong></div>
                     </a>
                     <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
                 </div>
                 <ul class="right-menu list-inline no-margin-bottom">
-                    <li class="list-inline-item"><a href="#" class="search-open nav-link"><i class="icon-magnifying-glass-browser"></i></a></li>
-                    <li class="list-inline-item logout"><a id="logout" href="/user/logout" class="nav-link">Logout <i class="icon-logout"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="search-open nav-link"><i
+                                class="icon-magnifying-glass-browser"></i></a></li>
+                    <li class="list-inline-item logout"><a id="logout" href="/user/logout" class="nav-link">Logout <i
+                                class="icon-logout"></i></a></li>
                 </ul>
             </div>
         </nav>
@@ -63,7 +66,8 @@
     <div class="d-flex align-items-stretch ">
         <nav id="sidebar">
             <div class="sidebar-header d-flex align-items-center ">
-              <img src="{% static "workout/images/badges/" %}badge_{{user.level}}.png" alt="..." class="img-fluid rounded-circle avatar">
+                <img src="{% static "workout/images/badges/" %}badge_{{user.level}}.png" alt="..."
+                    class="img-fluid rounded-circle avatar">
                 <div class="title">
                     <h1 class="h5">{{user.username}}</h1>
                     <p>{{user.level_name}}</p>
@@ -90,53 +94,56 @@
 
                             <!-- All Workout Table -->
                             <table class="table table-sm all-workouts-table mb-4">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Date:</th>
-                                  <th scope="col">Workout:</th>
-                                  <th scope="col">Actions:</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {% for workout in workouts %}
-                                <tr>
-                                    <td scope="row">{{workout.created_at | date}}</td>
-                                    <td><em>{{workout.name}}</em></td>
-                                    <td>
-                                      <form action="/workout/{{workout.id}}">
-                                        <button class="btn btn-link btn-sm view-link" type="submit"><i class="fa fa-eye"></i> View</button>
-                                      </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                              </tbody>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date:</th>
+                                        <th scope="col">Workout:</th>
+                                        <th scope="col">Actions:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for workout in workouts %}
+                                    <tr>
+                                        <td scope="row">{{workout.created_at | date}}</td>
+                                        <td><em>{{workout.name}}</em></td>
+                                        <td>
+                                            <form action="/workout/{{workout.id}}">
+                                                <button class="btn btn-link btn-sm view-link" type="submit"><i
+                                                        class="fa fa-eye"></i> View</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
                             <!-- Workout Pagination -->
                             {% if workouts.has_other_pages %}
                             <ul class="pagination pagination-lg justify-content-end mb-4">
                                 {% if workouts.has_previous %}
-                                  <li class="page-item">
-                                    <a href="?page={{ workouts.previous_page_number }}" class="page-link bg-dark text-white">Previous</a>
-                                  </li>
+                                <li class="page-item">
+                                    <a href="?page={{ workouts.previous_page_number }}"
+                                        class="page-link bg-dark text-white">Previous</a>
+                                </li>
                                 {% else %}
-                                  <li class="page-item disabled">
+                                <li class="page-item disabled">
                                     <span class="page-link end-nav bg-dark">Previous</span>
-                                  </li>
+                                </li>
                                 {% endif %} {% for i in workouts.paginator.page_range %} {% if workouts.number == i %}
-                                  <li class="page-item active">
+                                <li class="page-item active">
                                     <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span>
                                 </li>
                                 {% else %}
                                 <li class="page-item">
-                                  <a href="?page={{ i }}" class="page-link bg-dark text-white">{{ i }}</a>
+                                    <a href="?page={{ i }}" class="page-link bg-dark text-white">{{ i }}</a>
                                 </li>
                                 {% endif %} {% endfor %} {% if workouts.has_next %}
                                 <li class="page-item">
-                                  <a href="?page={{ workouts.next_page_number }}" class="page-link bg-dark text-white">Next</a>
+                                    <a href="?page={{ workouts.next_page_number }}"
+                                        class="page-link bg-dark text-white">Next</a>
                                 </li>
                                 {% else %}
                                 <li class="page-item disabled">
-                                  <span class="page-link bg-dark">Next</span>
+                                    <span class="page-link bg-dark">Next</span>
                                 </li>
                                 {% endif %}
                             </ul>
@@ -159,7 +166,8 @@
             <footer class="footer fixed-bottom no-margin-bottom">
                 <div class="footer__block block no-margin-bottom">
                     <div class="container-fluid text-center">
-                        <p class="no-margin-bottom">2017 &copy; <a href="http://sasquat.ch" target="_blank" class="sasquatch-footer-link">Sasquat.ch</a></p>
+                        <p class="no-margin-bottom">2021 &copy; <a href="https://timknab.dev" target="_blank"
+                        class="sasquatch-footer-link">timknab.dev</a></p>
                     </div>
                 </div>
             </footer>
